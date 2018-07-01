@@ -1,0 +1,128 @@
+<section id="scenarioSection" [@shrinkOut]="animate">
+
+  <div class="form-group">
+    <h2 for="scenarioName" style="display:  inline-block">Scenario name</h2>
+    <span id="xButton" (click)="deleteScenario()">X</span>
+    <span id="collapseButton" class="collapseButton{{id}}" (click)="collapseScenario(id)">V</span>
+    <span id="copyButton" class="copyButton{{id}}" (click)="copyButtonPressed(id)"><img
+      src="../../assets/copy-copy-icon-75335.png"></span>
+    <input required ngModel name="scenarioName" #scenarioName="ngModel" [(ngModel)]="title"
+           (change)="updateGraphsOrWE(scenarioName)" id="scenarioName{{id}}"
+           type="text" class="form-control" placeholder="Enter scenario title here">
+    <div class="alert alert-danger" *ngIf="scenarioName.touched && !scenarioName.valid">Scenario name is required</div>
+  </div>
+  <div id="collapse-container{{id}}" class="collapse show ">
+    <form>
+      <div class="form-group">
+        <h3 for="productDescription" style="display:inline-block">Product description</h3>
+        <div class="info-tooltip">i
+          <span class="tooltip-text">Enter the name of the product for which the footprint is calculated in this scenario.
+          </span>
+        </div>
+        <input ngModel name="productDescription" [(ngModel)]="desc" #productDescription="ngModel"
+               (change)="updateProductDescription(productDescription)" type="text"
+               id="productDescription{{id}}" class="form-control"
+               placeholder="Enter the amount of product unit eg 1kg cookies/year">
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" [ngModel]="radioButton" name="calculationPlace" [value]="1" (click)="radioClick(1)">
+          Supply chain
+        </label>
+        <label>
+          <input type="radio" name="calculationPlace" [ngModel]="radioButton" [value]="2" (click)="radioClick(2)">
+          Production process
+        </label>
+        <label>
+          <input type="radio" name="calculationPlace" [ngModel]="radioButton" [value]="3" (click)="radioClick(3)">
+          Transport
+        </label>
+        <label>
+          <input type="radio" name="calculationPlace" [ngModel]="radioButton" [value]="4" (click)="radioClick(4)"> All
+        </label>
+        <div class="info-tooltip">i
+          <span class="tooltip-text">Select the process for which you would like to calculate the footprint. Select ALL in case you want to calculate the footprint for all processes. In that case the results will be displayed together in one graph.</span>
+        </div>
+      </div>
+      <hr/>
+    </form>
+    <div *ngIf="showSupplyChain">
+      <h3>Supply chain</h3>
+      <p>Name, type and extent of supply chain factors that can be related to land use and emission of GHG.</p>
+
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let item of supplyChainItems; let i = index" class="list-group-item">
+          <app-item (changesEvent)="receiveItemInfoSupplyChain($event)"
+                    (deleteItemOutput)="deleteSupplyChainItem($event)" [id]="i" [prodType]="'supplyChain'"
+                    [cpyData]="supplyChainCpyItems[i]"></app-item>
+        </li>
+      </ul>
+      <button id="add-supp-item-b" type="button" class="btn btn-default btn-lg my-2"
+              (click)="onAddSupplyChainItem($event)">Add item
+      </button>
+      <div class="info-tooltip">i
+        <span class="tooltip-text">If you want to add another land use item or greenhouse gas factor for this part of the chain press this button.
+        </span>
+      </div>
+
+      <div routerLink="/methodology" fragment="section-5">
+        <p>If you are not sure which type is appropriate for you, <a href="#section-5"> press this link </a> and look at
+          our table that describes each type.</p>
+      </div>
+
+    </div>
+
+    <div *ngIf="showSupplyChain && showProductionSite && showTransport">
+      <hr/>
+    </div>
+
+    <div *ngIf="showProductionSite">
+      <h3>Production process</h3>
+      <p>Name, type and extent of production process and site factors that can be related to land use and emission of
+        GHG.</p>
+
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let item of productionSiteItems; let i = index" class="list-group-item">
+          <app-item (changesEvent)="receiveItemInfoProductionSite($event)"
+                    (deleteItemOutput)="deleteProductionSiteItem($event)" [id]="i" [prodType]="'prodSite'"
+                    [cpyData]="prodSiteCpyItems[i]"></app-item>
+        </li>
+      </ul>
+      <button id="add-prod-item-b" (click)="onAddProductionSiteItem($event)" class="btn btn-default btn-lg my-3">Add
+        item
+      </button>
+      <div class="info-tooltip">i
+        <span class="tooltip-text">If you want to add another land use item or GHG factor for this part of the chain press this button.
+        </span>
+      </div>
+      <div routerLink="/methodology" fragment="section-5">
+        <p>If you are not sure which type is appropriate for you, <a href="#section-5"> press this link </a> and look at
+          our table that describes each type.</p>
+      </div>
+    </div>
+
+    <div *ngIf="showSupplyChain && showProductionSite && showTransport">
+      <hr/>
+    </div>
+
+    <div *ngIf="showTransport">
+      <h3>Transport</h3>
+      <p>Name, type and extent of transport process that can be related to emission of GHG.</p>
+
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let item of transportItems; let i = index" class="list-group-item">
+          <!-- <app-item (changesEvent)="receiveItemInfoProductionSite($event)" (deleteItemOutput)="deleteProductionSiteItem($event)" [id]="i" [prodType]="'prodSite'" [cpyData]="prodSiteCpyItems[i]"></app-item> -->
+          <app-transport-item [id]="i" (changesEvent)="receiveTransportItemInfo($event)"
+                              (deleteItemOutput)="deleteTransportItem($event)"
+                              [cpyData]="transportCpyItems[i]"></app-transport-item>
+        </li>
+      </ul>
+      <button id="add-tr-item-b" (click)="onAddTransportItem($event)" class="btn btn-default btn-lg my-3">Add item
+      </button>
+      <div class="info-tooltip">i;
+        <span class="tooltip-text">If you want to add another land use item or GHG factor for this part of the chain press this button.
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

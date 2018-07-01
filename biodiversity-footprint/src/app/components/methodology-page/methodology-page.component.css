@@ -1,0 +1,11 @@
+
+img {
+  max-width: 350px;
+  padding: 10px;
+}
+
+@media (min-width: 660px) {
+  #water {
+    padding-bottom: 70px;
+  }
+}

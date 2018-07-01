@@ -1,0 +1,48 @@
+<div class="container">
+  <section id="section-1">
+    <h2 class="text-center">About</h2>
+    <p>
+      By the use of the tool, various companies have an opportunity to calculate their biodiversity footprint online.
+      The tool is based on dose response relationships of two pressure factors from the GLOBIO methodology and therefore it gives only an indication of the generic impact on biodiversity. No rights can be derived from the results obtained. Plansup and Saxion do not accept any liability for decisions taken based on results obtained.<br><br>
+    </p>
+  </section>
+
+  <section id="section-2">
+  <h2 class="text-center">Collaboration with Saxion</h2>
+  <p>
+    Saxion University of Applied Sciences gave an opportunity to students to practice and improve their skills by working in teams on different projects. In turn, these projects are carried out in collaboration with companies. This type of interaction is incredibly useful, as everyone benefits. This calculator is the result of a collaboration between Saxion University students and Plansup.
+  </p>
+  </section>
+
+  <section id="section-3">
+  <h2 class="text-center">Open source</h2>
+  <p>
+    The open source BF calculator was developed by Plansup in collaboration with Wageningen Environmental Research. The research of the underlying methodology and the development of the calculator was carried out with public money and therefore the calculator is fully accessible and free of charge. It is expected that the tool will be improved in the future on the basis of additional research. If you adjust the tool functionality, this must be reported when results are published. Suggestions for improvement / adaptation of the tool can be sent to: <a href="mailto:plansup.consult@gmail.com">plansup.consult@gmail.com</a>.
+  </p>
+  </section>
+
+
+  <h2 class="text-center">Get in contact</h2>
+  <input type="email" required class="form-control" placeholder="Your e-mail address" [(ngModel)]="email">
+  <br>
+  <div class="form-group">
+    <!--<label for="exampleFormControlTextarea1">Write your comment below.</label>-->
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+              placeholder="Write your opinion, comments or suggestions here" [(ngModel)]="message"></textarea>
+  </div>
+
+  <button type="button" class="btn btn-info" (click)="sendEmail()">Send</button>
+
+
+</div>
+
+<footer class="page-footer font-small blue pt-4 mt-4">
+
+  <div class="footer-copyright text-center py-3" style="background:#bbbab9  ">This is an open source project. Download
+    code from
+    <a href="https://github.com/rooijw/biodiversity-footprint"> Github.</a>
+  </div>
+
+</footer>
+
+

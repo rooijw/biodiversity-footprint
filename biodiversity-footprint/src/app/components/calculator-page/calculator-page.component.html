@@ -1,0 +1,246 @@
+<div class="container">
+  <header class="text-center text-black p-3">
+    <h2 class="display-4"> Biodiversity footprint calculator</h2>
+  </header>
+  <section id="section-1" class="bg-faded p-4 my-3" style="background:#f2f2f2   ">
+    <h2 style="display: inline-block;">How to use this tool</h2>
+    <span id="collapseButton" (click)="colapseHowTo()">V</span>
+    <div id="collapse-container" class="collapse show">
+      <p>This tool calculates the biodiversity impact of your company's supply chain, production process and transport that
+        can be related to one or more products. With the calculator it is possible to calculate the biodiversity footprint
+        for multiple scenarios. It is recommended to use the first scenario to describe the current situation and to use
+        subsequent scenarios to describe all kinds of biodiversity friendly measures that are expected to change the footprint
+        in the near future. Below you can fill in the name of the scenario and type of product, and select the parts of the
+        chain which you want to include in your calculation. For each part of the chain you need to fill in the most relevant
+        land uses and greenhouse gas (GHG) emitting processes that can be related to the product. For each different land
+        use you need to fill in the name of the land use, select the (nearest) corresponding land use category from the list
+        and provide the extend of the area in hectares. In case a land use type is also used for other economic use which
+        cannot be related to the product, you need to apply a correction factor based on economic allocation (see also methodology).
+        For each GHG emitting factor you need to provide a name and select the type of GHG emitted and fill in the quantity
+        in kilogram. The calculations are performed in real time as the user enters data. Results are shown in a graph that
+        shows the total biodiversity footprint per scenario and impact share of each contributing factor.
+        <br>
+        <br> Before you start using the calculator you should make a list of all items per part of the chain that can be related
+        to land use and a list of items that can be related to GHG. Next you should try to figure out the type of land use
+        and GHG and the amounts; So for land use you need to have a description of the land that is used and know the extent
+        of the area used for each land use item (in ha). For GHG you need to know the type of GHG emitted and the amount
+        of emission per item.</p>
+      <div id="tutorialCategory">
+        <h5 style="display: inline-block;">Land use type and area in ha</h5>
+        <span id="collapseButtonLandUse" (click)="colapseLandUse()">V</span>
+        <br/>
+        <div id="collapse-container-landuse" class="collapse">
+          <p>After making an inventory of land use items per part of the chain you need to select to which land use category
+            the item can be classified. In the list you can select from different land use categories. Select the land use
+            category that corresponds best with the item in terms of use and management type. A table with a description
+            for each of the land use categories can be downloaded
+            <a href="../methodology-page/methodology-page.component.html#section-5">here</a>. Next, you need to fill in the area in hectares for each land use category. In case you don’t have information
+            on the area for an item you need to find this out with help of maps, inquiries (suppliers) or measure the area
+            yourself via tools like Google Earth (e.g. to measure the area of a production plant). In case you use a certain
+            quantity of raw materials for your product and don’t have information on the area used for the production of
+            them, you can search the internet for standard area figures per raw material. In case of biological materials,
+            e.g. sugar, you first need to find out what crop is used (sugar beet or sugar cane) and where it is produced.
+            Next, you can try to find the productivity rate of that crop in the region. Once you know the productivity (ton/ha),
+            you can calculate the amount of land needed to produce the amount that you use for your product.
+            <br>
+          </p>
+        </div>
+      </div>
+      <div id="tutorialCategory">
+        <h5 style="display: inline-block;">GHG type and amount</h5>
+        <span id="collapseButtonGHG" (click)="colapseGHG()">V</span>
+        <br/>
+        <div id="collapse-container-ghg" class="collapse">
+          <p>Once you have made the list of emitters per part of the chain you need to quantify the type of emission and the
+            amount. You can select from a list of GHG and typical sources of energy. The list contains only most common factors
+            from these categories. If you would like to calculate biodiversity impact of any other fossil fuel, renewable
+            energy source, production of plastic, chemicals, metals, building materials or any other commonly used item in
+            the production or transportation process, you can download the
+            <a href="../methodology-page/methodology-page.component.html#section-5">excel</a> sheet to find out the CO2 equivalents for these items. In that case choose "other" option after selectingthe
+            GHG category, find the corresponding CO2 equivalent of the desired item and fill it in the calculator.
+            <br/>
+            <span style="font-style: italic"> - The values in the excel sheet originate from the Ecoinvent 3 database from 2015.</span>
+            <br>
+          </p>
+        </div>
+      </div>
+      <div id="tutorialCategory">
+        <h5 style="display: inline-block;">Transport emission</h5>
+        <span id="collapseButtonTransport" (click)="colapseTransport()">V</span>
+        <br/>
+        <div id="collapse-container-transport" class="collapse">
+          <p>The main impact of transport on biodiversity is by emission of the fuel used for the transport of raw materials,
+            intermediate products (if any) and final product to the main distribution centres. The calculator includes the
+            most common transport types. The CO2 equivalent values are automatically calculated for you after filling in
+            the total distance (km) and weight of the freight (ton/km) that is transported. Please note that in case a vehicle
+            will return to base empty, that distance needs to be included to. Typical distances between harbours and airports
+            can be easily found on the internet.
+          </p>
+        </div>
+      </div>
+
+      <div id="tutorialCategory">
+        <h5 style="display: inline-block;">Economic allocation</h5>
+        <span id="collapseButtonEconomicAllocation" (click)="collapseEconomicAllocation()">V</span>
+        <br/>
+        <div id="collapse-container-economic-allocation" class="collapse">
+          <p>
+            Economic allocation is a correction option offered for each footprint item. With this option it is possible
+            to correct the biodiversity impact result for other economical uses of the same area for which the company is
+            not responsible. In case of transport economic allocation is determined by the share of costs. The share of costs
+            is in most cases determined by volume or weight of the freight. If you are unsure what to enter in this field
+            you can leave it empty.
+            <br/>
+            <span style="font-style: italic">
+              - Example - In the case the product is wool that land is also used for production of sheep meat. If the economic value of
+              wool is 10 and the that of meat 90, than the economic allocation value of the land for wool is 0.1 of the total
+              economic value of that land.</span>
+            <br/>
+            <span style="font-style: italic">- Example - in case weight determines the cost of the transport and the truck transports in total 1000 kg of
+              products in the same ride with 200 kg of sweaters and the rest (800 kg) are products of other companies, the
+              economic share of costs factor should be 0.2.</span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <section id="section-scenario" class="p-3 my-3" style="background:#EEF6FF  ">
+    <div id="accordion">
+      <ul class="list-group" id="scenario-ul">
+        <li *ngFor="let scenario of addedScenarios ; let i = index" class="list-group-item my-2" id="sce{{i}}">
+          <app-scenario class="animated fadeIn addedScenario{{i}}" (deleteScenarioOutput)="deleteScenario($event)" [id]="i" [cpyInfo]="cpyArr[i]"
+            (sendGraphUpdate)="updateGraphs($event, i)" (cpyEvent)="cpyEvent($event)"></app-scenario>
+        </li>
+      </ul>
+    </div>
+
+    <button (click)="onAddScenario($event)" class="btn btn-primary btn-lg" style="margin-top: 7px">Add scenario</button>
+
+    <div class="info-tooltip">i
+      <span class="tooltip-text">If you wish to add another scenario (eg. future scenario) press this button.
+      </span>
+    </div>
+
+  </section>
+
+
+  <section id="section-results" class="bg-faded my-3">
+    <h1 class="text-center">Results</h1>
+
+    <p style="margin-top:15px">The graph below is a graphical representation of the results. The X axis represents different scenarios and the Y axis
+      represents the biodiversity impact expressed in MSA.ha. In case multiple factors were entered for a scenario, the bar
+      representing that scenario will contain multiple colors; one color for each factor. The colors are explained in the
+      legend of the graphs.
+      <span style="font-weight: bold">Certain factors can be temporarily removed from the graph by clicking on the factor name in the legend. These factors
+        can be added again by clicking on the factor name again.</span>
+      <p>Extra filtering options for the graphs can be found below the graph. The numerical biodiversity impact values for every
+        scenario and factor can be found in the tables below the graph.</p>
+
+      <app-graphs [scenariosArray]="scenarios"></app-graphs>
+
+
+      <div class="card-group" style="margin-top: 30px">
+        <div class="card text-center" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Land use</h5>
+            <p class="card-text">To filter the results to show only biodiversity impact caused by the land use press the button below. </p>
+            <button (click)="filterGraphLandUse()" class="btn btn-primary">Filter results</button>
+          </div>
+        </div>
+        <div class="card text-center" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Greenhouse gases</h5>
+            <p class="card-text">To filter the results to show only biodiversity impact caused by greenhouse gases press the button below.</p>
+            <button (click)="filterGraphGHG()" class="btn btn-primary">Filter results</button>
+          </div>
+        </div>
+        <div class="card text-center" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Supply chain</h5>
+            <p class="card-text">To filter the results to show only biodiversity impact caused by the supply chain press the button below.</p>
+            <button (click)="filterGraphSupplyChain()" class="btn btn-primary">Filter results</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-group" style="margin-bottom: 30px">
+        <div class="card text-center" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Production process</h5>
+            <p class="card-text">To filter the results to show only biodiversity impact caused by the production process press the button below.</p>
+            <button (click)="filterGraphProdSite()" class="btn btn-primary">Filter results</button>
+          </div>
+        </div>
+        <div class="card text-center" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Transport</h5>
+            <p class="card-text">To filter the results to show only biodiversity impact caused by transport press the button below.</p>
+            <button (click)="filterGraphTransport()" class="btn btn-primary">Filter results</button>
+          </div>
+        </div>
+        <div class="card text-center" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Reset filters</h5>
+            <p class="card-text">To reset the results filters to show biodiversity impact caused by all factors press the button below.</p>
+            <button (click)="filterGraphReset()" class="btn btn-primary">Filter results</button>
+          </div>
+        </div>
+      </div>
+
+
+
+  </section>
+
+
+
+  <h2 class="text-center ">Tables</h2>
+  <div *ngFor="let result of allResults; let in = index">
+    <div *ngIf="in > 0">
+      <hr/>
+    </div>
+    <h3>{{allResults[in][0].scenarioTitle}}</h3>
+    <table class="table table-hover table-fixed" id="resultTable{{in}}">
+      <!--<caption>{{allResults[in][0].scenarioTitle}}</caption>-->
+
+      <!--add index to id and pass it in sort function-->
+      <thead class="thead-light">
+        <!-- For loop that goes for each flattened result and displays its data in the table in td not tr-->
+        <tr>
+          <th (click)="sortTable(0)" style="cursor:pointer" scope="col">Factor name</th>
+          <th (click)="sortTable(1)" style="cursor:pointer" scope="col">Category</th>
+          <th (click)="sortTable(2)" style="cursor:pointer" scope="col">Sub category</th>
+          <th (click)="sortTableNumerical(3)" style="cursor:pointer" scope="col">Impact in MSA.ha</th>
+          <th (click)="sortTableNumerical(4)" style="cursor:pointer" scope="col">Percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let subResult of allResults[in]">
+          <td scope="row">{{subResult.name}}</td>
+          <td>{{subResult.category}}</td>
+          <td>{{subResult.subCategory}}</td>
+          <td>{{subResult.msa}}</td>
+          <td>{{subResult.percentage}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="download($event, in)" class="btn btn-primary btn-lg" style="margin-top: 7px">Export Data</button>
+    <div class="info-tooltip">i
+      <span class="tooltip-text">Your data will be exported as an excel file.
+      </span>
+    </div>
+
+
+  </div>
+</div>
+
+
+<!-- Footer -->
+
+<footer class="page-footer font-small blue pt-4 mt-4">
+
+  <div class="footer-copyright text-center py-3" style="background:#bbbab9  ">This is an open source project. Download code from
+    <a href="https://github.com/rooijw/biodiversity-footprint"> Github.</a>
+  </div>
+
+</footer>

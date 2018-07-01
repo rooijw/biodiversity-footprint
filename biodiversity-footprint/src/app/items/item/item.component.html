@@ -1,0 +1,55 @@
+<section [@flyInOut]="state">
+    <div class="item">
+        <input type="text" id="itemName{{id}}" [(ngModel)]="name" class="txt text-input-box form-control" placeholder="Enter name"
+            (change)="setItemName($event.target.value)">
+        <div class="field-Container">
+            <select (change)="setNewFootprintType($event.target.value)" class="input-item dropdown form-control" id="impactAreaDD{{id}}"
+                [(ngModel)]="impactArea">
+                <option *ngFor="let type of footprintTypes" [value]="type">{{type}}</option>
+            </select>
+            <div class="info-tooltip">i
+                <span class="tooltip-text">Choose land use option if the factor you are entering is related to use of land that is required for the
+                    production of the product. Choose greenhouse gas if the factor is related to the greenhouse gas emissions
+                    that are caused for the production of the product.
+                </span>
+            </div>
+        </div>
+        <div class="field-Container">
+            <select id="typeDD{{id}}" class="dropdown form-control" (change)="showExtra($event.target.value)" [(ngModel)]="type">
+                <option *ngIf="selectedFTypes == undefined" value="Select" disabled="true" selected>Select</option>
+                <option *ngFor="let type of selectedFTypes" [value]="type">{{type}}</option>
+            </select>
+
+            <div class="info-tooltip">i
+                <span class="tooltip-text"> In case of land use choose a category that closely matches your type of land use. In case of greenhouse gasses
+                    choose a gas that is being emitted by this factor. If your gas isn't listed here, choose other and enter
+                    the amount of CO2 equivalent for that gas. </span>
+            </div>
+        </div>
+
+        <div class="field-Container" *ngIf="showExtraInput">
+            <input type="number" id="extra{{id}}" class="input-item text-input-box form-control " placeholder="Enter CO2 eq." [(ngModel)]="other">
+            <div class="info-tooltip">i
+                <span class="tooltip-text">In case of land use, enter how much hectares are covered by the factor. In case of greenhouse gas enter how
+                    much kilogram of the gas is emitted by the factor.
+                </span>
+            </div>
+        </div>
+
+        <div class="field-Container">
+            <input id="amount{{id}}" [(ngModel)]="amount" type="number" class="text-input-box form-control" placeholder="{{placeholderValue}}"
+                (change)="setItemAmount($event.target.value)">
+            <span id="xButtonItem" (click)="deleteItem()">X</span>
+        </div>
+        <div class="field-Container eco" >
+            <input id="economicAlocation{{id}}" [(ngModel)]="economicAlocation" class="ea input-item text-input-box form-control" placeholder="Economic alocation" 
+                (change)="setItemEconomicAlocation($event.target.value)">
+            <div class="info-tooltip">i
+                <span class="tooltip-text">In case of multiple use of land or if the production process is also used for other products, the footprint share can be calculated by the fraction of the economic value of the product divided by the total economic value of all uses.<br/>
+                    If there is no multiple use this value can be omitted.
+                </span>
+            </div>
+            <span id="xButtonItem" (click)="deleteItem()">X</span>
+        </div>
+    </div>
+</section>

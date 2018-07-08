@@ -236,9 +236,9 @@ export class ScenarioComponent implements OnInit {
         if (!($event.economicAlocation <= 10 && $event.economicAlocation >= 0)) {
           ea = 1;
         }
-        msa = $event.amount * $event.MSA * ea;
+        msa = $event.amount * $event.MSA * ea * 0.000032881;
       } else {
-        msa = $event.amount * $event.MSA;
+        msa = $event.amount * $event.MSA * 0.000032881;
       }
 
       msa = Math.round((msa + 0.00001) * 100) / 100;
@@ -308,9 +308,9 @@ export class ScenarioComponent implements OnInit {
         if (!($event.economicAlocation <= 10 && $event.economicAlocation >= 0)) {
           ea = 1;
         }
-        msa = $event.amount * $event.MSA * ea;
+        msa = $event.amount * $event.MSA * ea * 0.000032881;
       } else {
-        msa = $event.amount * $event.MSA;
+        msa = $event.amount * $event.MSA* 0.000032881;
       }
 
       msa = Math.round((msa + 0.00001) * 100) / 100;
@@ -357,7 +357,7 @@ export class ScenarioComponent implements OnInit {
     } else {
       msa = ($event.weight * $event.distance) * $event.msa * 0.000032881; // add /1000 after $event.weight to calculate with kg and turn them into tons for calc
     }
-    // msa = Math.round((msa + 0.00001) * 100) / 100;
+    msa = Math.round((msa + 0.00001) * 100) / 100;
 
     let namee = "";
       if($event.name != ""){

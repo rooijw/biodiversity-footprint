@@ -103,118 +103,118 @@ module.exports = {
   ],
   "Green house gas": [
     {
-      "msa" : 1,
+      "CO2 eq" : 1,
       "type":"CO2 (m3)",
       "description":"Carbon dioxide. Colorless gas"
     },
     {
-      "msa" : 25,
+      "CO2 eq" : 25,
       "type":"CH4 (m3)",
       "description":"Methane. Colorless, flammable, nontoxic gas with a sweet, oil type odor"
     }
  ,
-   {"msa": 298,
+   {"CO2 eq": 298,
      "type": "N2O (m3)",
      "description": "Nitrous oxide / laughing gas"
     },
-   {"msa": 0.65,
+   {"CO2 eq": 0.65,
      "type": "Petrol (liter)",
      "description": "Gasoline"
     },
-   {"msa": 0.01,
+   {"CO2 eq": 0.01,
      "type": "Hard coal briquettes (kg)",
      "description": "Compressed block of coal dust or other combustible biomass material such as charcoal, sawdust, wood chips, peat, or paper used for fuel and kindling to start a fire."
     },
-   {"msa": 0.53,
+   {"CO2 eq": 0.53,
      "type": "Diesel (liter)",
      "description": "Liquid fuel used in diesel engines, whose fuel ignition takes place, without any spark, as a result of compression of the inlet air mixture and then injection of fuel."
     },
-   {"msa": 0.53,
+   {"CO2 eq": 0.53,
      "type": "Electricity - NL (kWh)",
      "description": "Electricity"
     },
-   {"msa": 0.14,
+   {"CO2 eq": 0.14,
      "type": "Natural gas (m3)",
      "description": "Naturally occurring hydrocarbon gas mixture consisting primarily of methane, but commonly including varying amounts of other higher alkanes, and sometimes a small percentage of carbon dioxide, nitrogen, hydrogen sulfide, or helium"
     },
-   {"msa": 0.,
+   {"CO2 eq": 0.,
      "type": "Electricity from wind, sun and water power (kWh)",
      "description": "Electricity from wind, sun and water power (kWh)"
 
    },
-   {"msa": 0.19,
+   {"CO2 eq": 0.19,
      "type": "Electricity from biomass (kWh)",
      "description": "Biomass is an industry term for getting energy by burning wood, and other organic matter"
 
    },
-   {"msa": 0.,
+   {"CO2 eq": 0.,
      "type": "Other",
      "description": "Any other type"
     }
   ],
   "Transport": [
     {
-      "msa": 1.95,
+      "CO2 eq per ton/km": 1.95,
       "type": "light commercial vehicle (Van)",
       "description": ""
     },
     {
-      "msa": 0.085,
+      "CO2 eq per ton/km": 0.085,
       "type": "Lorry (>32 metric ton)",
       "description": ""
     },
     {
-      "msa": 0.170,
+      "CO2 eq per ton/km": 0.170,
       "type": "Lorry (16-32 metric ton)",
       "description": ""
     },
     {
-      "msa": 0.22,
+      "CO2 eq per ton/km": 0.22,
       "type": "Lorry (7.5-16 metric ton)",
       "description": ""
     },
     {
-      "msa": 0.525,
+      "CO2 eq per ton/km": 0.525,
       "type": "Lorry (3.5-7.5 metric ton)",
       "description": ""
     },
     {
-      "msa": 0.05,
+      "CO2 eq per ton/km": 0.05,
       "type": "Freight train (electric)",
       "description": ""
     },
     {
-      "msa": 0.03,
+      "CO2 eq per ton/km": 0.03,
       "type": "Freight train (diesel)",
       "description": ""
     },
     {
-      "msa": 0.05,
+      "CO2 eq per ton/km": 0.05,
       "type": "Barge tanker",
       "description": ""
     },
     {
-      "msa": 0.05,
+      "CO2 eq per ton/km": 0.05,
       "type": "Barge",
       "description": ""
     },
     {
-      "msa": 0.01,
+      "CO2 eq per ton/km": 0.01,
       "type": "transoceanic tanker",
       "description": ""
     },
     {
-      "msa": 0.01,
+      "CO2 eq per ton/km": 0.01,
       "type": "transoceanic ship",
       "description": ""
     },
     {
-      "msa": 1.7,
+      "CO2 eq per ton/km": 1.7,
       "type": "Aircraft (intracontinental)",
       "description": ""
     },
     {
-      "msa": 1.1,
+      "CO2 eq per ton/km": 1.1,
       "type": "Aircraft (intercontinental)",
       "description": ""
     }

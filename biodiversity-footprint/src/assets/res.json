@@ -50,11 +50,11 @@
     ],
     "Green house gas": [
         {
-            "CO2 (m3)": 1
+            "CO2 (kg)": 1
         },{
-            "CH4 (m3)": 25
+            "CH4 (kg)": 25
         },{
-            "N2O (m3)": 298
+            "N2O (kg)": 298
         },{
             "Petrol (liter)": 0.65
         },{

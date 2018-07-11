@@ -16,19 +16,19 @@ export class AboutPageComponent implements OnInit {
 
   //send an email to address matching email with message matching message
   sendEmail(){
-    let data = {
-      "email": this.email,
-      "message": this.message
-    }
-    console.log(data);
-    $.ajax({
-      type: "POST",
-      url: "/api/email",
-      data: data
-    }).done(function(data){
-      console.log(data);
-      alert("email sent successfully")
-    });
+    // let data = {
+    //   "email": this.email,
+    //   "message": this.message
+    // }
+    // console.log(data);
+    // $.ajax({
+    //   type: "POST",
+    //   url: "/api/email",
+    //   data: data
+    // }).done(function(data){
+    //   console.log(data);
+    //   alert("email sent successfully")
+    // });
   }
 
 }

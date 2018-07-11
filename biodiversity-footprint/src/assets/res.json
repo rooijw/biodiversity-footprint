@@ -1,0 +1,107 @@
+{
+    "Land use": [
+        {
+            "Primary forests / pristine nature": 1
+        },{
+            "Forest plantations, single species": 0.2
+        },{
+            "Forest plantations, mixed species": 0.3
+        },{
+            "Secondary forest (medium degraded forests, incl. clear cut logging with long rotations)": 0.5
+        },{
+            "Secondary forest (heavy degraded forests, incl clear cut logging with short rotations)": 0.3
+        },{
+            "Light used primary forest (limited selective logging of semi-natural forest)": 0.7
+        },{
+            "Light used forest (limited selective logging of semi-natural forest with Reduced Impact Logging management)": 0.8
+        },{
+            "Agro-forestry": 0.5
+        },{
+            "Extensive agriculture": 0.3
+        },{
+            "Irrigated intensive agriculture": 0.05
+        },{
+            "Intensive agriculture": 0.1
+        },{
+            "Perennial crops and woody bio fules": 0.2
+        },{
+            "Intensive managed man made pastures ": 0.1
+        },{
+            "Organic managed man made pastures": 0.3
+        },{
+            "Natural grass & shrub lands": 1
+        },{
+            "Urban area, industrial area": 0.05
+        },{
+            "Mining area": 0.05
+        },{
+            "Natural bare, rock and snow": 1
+        },{
+            "Natural rangelands with extensive grazing intensity of livestock equal to free roaming wildlife, including same seasonal pattern": 1
+        },{
+            "Ungrazed abandoned rangelands. Original grasslands no longer in use, lacking wildlife grazing and no forests developed": 0.7
+        },{
+            "Moderately grazed semi-natural grasslands with higher stocking rates and different seasonal pattern": 0.6
+        },{
+            "Grazed semi-natural grasslands with much higher stocking rates: grazing has different seasonal patterns and vegetation structure is different compared with natural rangelands": 0.5
+        },{
+            "Intensive grazed semi-natural grasslands with high degree of human management and disturbance": 0.3
+        }
+    ],
+    "Green house gas": [
+        {
+            "CO2 (kg)": 1
+        },{
+            "CH4 (kg)": 25
+        },{
+            "N2O (kg)": 298
+        },{
+            "Petrol (liter)": 0.65
+        },{
+            "Hard coal briquettes (kg)" : 0.01
+        },{
+            "Diesel (liter)" : 0.53
+        },{
+            "Electricity - NL (kWh)" : 0.53
+        },{
+            "Natural gas (m3)" : 0.14
+        },{
+            "Electricity from wind, sun and water power (kWh)" : 0
+        },{
+            "Electricity from biomass (kWh)" : 0.19
+        },{
+            "Other": 0
+        }
+    ],
+    "Transport":[
+        {
+            "light commercial vehicle (Van)":1.95
+        },{
+            "Lorry (>32 metric ton)":0.085
+        },{
+            "Lorry (16-32 metric ton)":0.170
+        },{
+            "Lorry (7.5-16 metric ton)":0.22
+        },{
+            "Lorry (3.5-7.5 metric ton)":0.525
+        },{
+            "Freight train (electric)":0.05
+        },{
+            "Freight train (diesel)":0.06
+        },{
+            "Barge tanker":0.05
+        },{
+            "Barge":0.05
+        },{
+            "transoceanic tanker":0.01
+        },{
+            "transoceanic ship":0.01
+        },{
+            "Aircraft (intracontinental)":1.7
+        },{
+            "Aircraft (intercontinental)":1.1
+        },{
+            "Other": 0
+        }
+    ]
+}

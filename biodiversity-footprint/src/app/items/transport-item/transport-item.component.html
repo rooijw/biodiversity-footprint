@@ -1,0 +1,49 @@
+<section [@flyInOut]="state">
+    <div class="item" (change)="changes($event)">
+        <input type="text" id="itemName{{id}}" [(ngModel)]="name" class="text-input-box form-control " placeholder="Enter name">
+
+        <div class="field-Container">
+            <select class="dropdown form-control" id="transportDD{{id}}" [(ngModel)]="type">
+                <option *ngFor="let type of transportTypes" [value]="type">{{type}}</option>
+            </select>
+            <div class="info-tooltip">i
+                <span class="tooltip-text">Select the type of transportation of raw materials / product</span>
+            </div>
+        </div>
+
+        <div class="field-Container" *ngIf="showOther">
+            <input type="number" id="extra{{id}}" class="text-input-box form-control " placeholder="Enter CO2 eq." [(ngModel)]="other">
+            <div class="info-tooltip">i
+                <span class="tooltip-text">Enter the CO2 equivalent index of your vehicle. If you are not sure about the CO2 equivalent index check the how to use this tool part of the page.
+                </span>
+            </div>
+        </div>
+
+        <div class="field-Container">
+            <input id="distance{{id}}" [(ngModel)]="distance" type="number" class="text-input-box form-control" placeholder="Distance (Km)">
+            <div class="info-tooltip">i
+                <span class="tooltip-text">Fill in the transportation distance of the raw materials / product (in km).
+                </span>
+            </div>
+        </div>
+
+        <div class="field-Container">
+            <input id="weight{{id}}" [(ngModel)]="weight" type="number" class="text-input-box form-control" placeholder="Weight (T)">
+            <div class="info-tooltip">i
+                <span class="tooltip-text">Fill in the weight of the materials that are transported (in ton or units of 1000 kg).
+                </span>
+            </div>
+
+            <span id="xButtonItem" (click)="deleteItem()">X</span>
+        </div>
+
+        <div class="field-Container">
+            <input id="economicAlocation{{id}}" [(ngModel)]="economicAlocation" class="text-input-box form-control" placeholder="Share of cost">
+            <div class="info-tooltip">i
+                <span class="tooltip-text">In case more goods are transported the footprint share can be calculated by the fraction of the transport cost of the product divided by the total transport cost. If no other products are transported than this value can be omitted.
+                </span>
+            </div>
+            <span id="xButtonItem" (click)="deleteItem()">X</span>
+        </div>
+    </div>
+</section>

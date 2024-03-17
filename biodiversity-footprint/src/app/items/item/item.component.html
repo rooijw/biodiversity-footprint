@@ -3,7 +3,7 @@
         <input type="text" id="itemName{{id}}" [(ngModel)]="name" class="txt text-input-box form-control" placeholder="Enter name"
             (change)="setItemName(value)">
         <div class="field-Container">
-            <select (change)="setNewFootprintType($event.target.value)" class="input-item dropdown form-control" id="impactAreaDD{{id}}"
+            <select (change)="setNewFootprintType((event.target as HTMLSelectElement).value)" class="input-item dropdown form-control" id="impactAreaDD{{id}}"
                 [(ngModel)]="impactArea">
                 <option *ngFor="let type of footprintTypes" [value]="type">{{type}}</option>
             </select>
@@ -41,7 +41,7 @@
         </div>
         <div class="field-Container eco">
             <input id="economicAlocation{{id}}" [(ngModel)]="economicAlocation" class="ea input-item text-input-box form-control" placeholder="Economic alocation"
-                (change)="setItemEconomicAlocation($event.target.value)">
+                (change)="setItemEconomicAlocation((event.target as HTMLInputElement).value)">
             <div class="info-tooltip">i
                 <span class="tooltip-text">In case of multiple use of land or if the production process is also used for other products, the footprint
                     share can be calculated by the fraction of the economic value of the product divided by the total economic
@@ -49,7 +49,7 @@
                     <br/> If there is no multiple use this value can be omitted.
                 </span>
             </div>
-            <span id="xButtonItem" (click)="deleteItem()">X</span>
+            <span id="xButtonItem" (click)="deleteItem()" >X</span>
         </div>
     </div>
 </section>

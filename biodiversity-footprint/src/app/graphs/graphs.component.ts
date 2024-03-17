@@ -1,8 +1,9 @@
 import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { Result } from '../../app/result.class';
+import { Chart } from 'chart.js';
 import { SubCategory } from '../../app/subCategory';
-import 'chart.js';
-import 'jspdf';
+import GraphToPdf from 'jspdf';
+
 import * as $ from 'jquery';
 import { ScenarioComponent } from '../scenario/scenario.component';
 
@@ -35,7 +36,7 @@ export class GraphsComponent implements OnInit {
     this.ctx = document.getElementById("myChart");
 
     // Global Options:
-    Chart.defaults.global.defaultFontColor = 'grey';
+    Chart.defaults.color = 'grey';
 
     this.options = {
       title: {
@@ -82,11 +83,11 @@ export class GraphsComponent implements OnInit {
     if (this.myChart) {
       this.myChart.destroy();
     }
-    this.myChart = new Chart(this.ctx, {
+    this.myChart= this.ctx, {
       type: this.chartType,
       data: this.data,
       options: this.options
-    });
+    };
   }
 
   //update graph with array of results
@@ -219,7 +220,7 @@ export class GraphsComponent implements OnInit {
   }
 
   //downloads graph from myChart component with settings described below as a biodiversity_footprint.pdf document
-  downloadGraph($event){
+  downloadGraph(){
     var newCanvas = <HTMLCanvasElement> document.getElementById('myChart');
     var newCanvasImg = newCanvas.toDataURL("image/png", 1.0);
     var doc = new GraphToPdf('landscape');

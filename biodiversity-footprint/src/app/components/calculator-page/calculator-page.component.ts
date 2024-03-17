@@ -41,6 +41,8 @@ export class CalculatorPageComponent implements OnInit {
   ngOnInit() {
   }
 
+  download($event: any, id: number) {
+  }
   //exports the table with certain id
   // TODO: ombouwen zie voorbeeld hieronder
   //download($event: any, id: number) {
@@ -68,7 +70,7 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //collapses or shows how to container
-  colapseHowTo() {
+  public colapseHowTo() {
     if ($("#collapse-container").hasClass("show")) {
       $("#collapseButton").css({ "transform": "rotate(0deg)" });
       $("#collapse-container").removeClass("collapse show") //.addClass("collapsing");
@@ -81,7 +83,7 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //collapses or shows how to land use container
-  colapseLandUse() {
+  public colapseLandUse() {
     if ($("#collapse-container-landuse").hasClass("show")) {
       $("#collapseButtonLandUse").css({ "transform": "rotate(0deg)" });
       $("#collapse-container-landuse").removeClass("collapse show") //.addClass("collapsing");
@@ -94,7 +96,7 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //collapses or shows how to GHG container
-  colapseGHG() {
+  public colapseGHG() {
     if ($("#collapse-container-ghg").hasClass("show")) {
       $("#collapseButtonGHG").css({ "transform": "rotate(0deg)" });
       $("#collapse-container-ghg").removeClass("collapse show") //.addClass("collapsing");
@@ -107,7 +109,7 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //collapses or shows how to transport container
-  colapseTransport() {
+  public colapseTransport() {
     if ($("#collapse-container-transport").hasClass("show")) {
       $("#collapseButtonTransport").css({ "transform": "rotate(0deg)" });
       $("#collapse-container-transport").removeClass("collapse show") //.addClass("collapsing");
@@ -120,7 +122,7 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //collapses or shows how to economic allocation container
-  collapseEconomicAllocation() {
+  public collapseEconomicAllocation() {
     if ($("#collapse-container-economic-allocation").hasClass("show")) {
       $("#collapseButtonEconomicAllocation").css({ "transform": "rotate(0deg)" });
       $("#collapse-container-economic-allocation").removeClass("collapse show") //.addClass("collapsing");
@@ -133,7 +135,7 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //deletes scenario that has id of $event
-  deleteScenario($event: any) {
+  public deleteScenario($event: any) {
     if (this.scenarios.length === 1) {
 
     } else {
@@ -161,14 +163,14 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //adds new scenario
-  onAddScenario($event1: any) {
+  public onAddScenario($event1: any) {
     let newItem = new ScenarioComponent;
     this.addedScenarios.push(newItem);
     this.cpyArr.push(undefined);
   }
 
   //updates graph with new results
-  updateGraphs($event: any, index: number) {
+  public updateGraphs($event: any, index: number) {
     this.allResults[index] = [];
     this.addedScenarios[index].title = $event[0].title;
     this.biodiversitySumPerScenario[index] = 0;
@@ -202,40 +204,40 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //filter results for land use items
-  filterGraphLandUse() {
+  public filterGraphLandUse() {
     this.filterGraph("Land use", "category");
   }
 
   //filter results for GHG items
-  filterGraphGHG() {
+  public filterGraphGHG() {
     this.filterGraph("Green house gas", "category");
 
   }
 
   //filter results for transport items
-  filterGraphTransport() {
+  public filterGraphTransport() {
     this.filterGraph("Transport", "category");
   }
 
   //filter results for supply chain items
-  filterGraphSupplyChain() {
+  public filterGraphSupplyChain() {
     this.filterGraph("supply chain", "area");
   }
 
   //filter results for production site items
-  filterGraphProdSite() {
+  public filterGraphProdSite() {
     this.filterGraph("production site", "area");
   }
 
   //show all results
-  filterGraphReset() {
+  public filterGraphReset() {
     if (this.graphs !== undefined) {
       this.graphs.first.updateGraph(this.flattenedArray);
     }
   }
 
   //update graph with results that have matching filterString and area
-  filterGraph(filterString: string, area: string) {
+  public filterGraph(filterString: string, area: string) {
     let filteredResults: Result[] = [];
 
     if (area == "area") {

@@ -96,7 +96,7 @@ export class TransportItemComponent implements OnInit {
   }
 
   //notify other component that there has been a change and send changed data
-  changes() {
+  public changes() {
     if (Array.isArray(this.type)) {
       this.type = this.type[0];
     }

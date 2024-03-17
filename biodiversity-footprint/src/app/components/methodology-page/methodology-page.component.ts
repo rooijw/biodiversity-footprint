@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as $ from 'jquery';
-import { log } from "util";
-import * as result from '../../../assets/res2.js';
 
 
 @Component({
@@ -13,15 +10,15 @@ export class MethodologyPageComponent implements OnInit {
 
   title = 'Description of components';
   res: any;
-  footprintTypes = [];
+  footprintTypes: any[] = [];
 
-  selectedFTypes = undefined;
+  selectedFTypes: any[];
   impactArea: "";
   type = "";
   emptyOption: boolean;
 
   constructor() {
-    this.res = result;
+    this.res =  '../../../assets/res2.js';
     this.emptyOption = true;
     let keys = Object.keys(this.res);
     keys.forEach(element => {
@@ -38,8 +35,8 @@ export class MethodologyPageComponent implements OnInit {
   setNewFootprintType(type: any) {
     this.impactArea = type;
     this.type = Object(this.res["" + type + ""]);
-    let a = [];
-    this.res["" + type + ""].forEach(element => {
+    let a: any[] = [];
+    this.res["" + type + ""].forEach((element: any) => {
       a.push(Object(element));
     });
     this.selectedFTypes = a;

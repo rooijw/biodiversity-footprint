@@ -58,7 +58,7 @@
         </li>
       </ul>
       <button id="add-supp-item-b" type="button" class="btn btn-default btn-lg my-2"
-              (click)="onAddSupplyChainItem($event)">Add item
+              (click)="onAddSupplyChainItem()">Add item
       </button>
       <div class="info-tooltip">i
         <span class="tooltip-text">If you want to add another land use item or greenhouse gas factor for this part of the chain press this button.
@@ -88,7 +88,7 @@
                     [cpyData]="prodSiteCpyItems[i]"></app-item>
         </li>
       </ul>
-      <button id="add-prod-item-b" (click)="onAddProductionSiteItem($event)" class="btn btn-default btn-lg my-3">Add
+      <button id="add-prod-item-b" (click)="onAddProductionSiteItem()" class="btn btn-default btn-lg my-3">Add
         item
       </button>
       <div class="info-tooltip">i
@@ -117,7 +117,7 @@
                               [cpyData]="transportCpyItems[i]"></app-transport-item>
         </li>
       </ul>
-      <button id="add-tr-item-b" (click)="onAddTransportItem($event)" class="btn btn-default btn-lg my-3">Add item
+      <button id="add-tr-item-b" (click)="onAddTransportItem()" class="btn btn-default btn-lg my-3">Add item
       </button>
       <div class="info-tooltip">i;
         <span class="tooltip-text">If you want to add another land use item or GHG factor for this part of the chain press this button.

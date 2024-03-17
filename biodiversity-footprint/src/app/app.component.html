@@ -1,11 +1,11 @@
+<div>hallo</div>
 <nav class="nav-bar">
-    <div class="name"> BIODIVERSITY FOOTPRINT CALCULATOR </div>
-    <div routerLink="/about" id="about" class="nav-item" (click)="selectNav($event)">About</div>
-    <div routerLink="/methodology" id="methodology" class="nav-item" (click)="selectNav($event)">Methodology</div>
-    <div routerLink="/calculator" id="calculator" class="nav-item selected" (click)="selectNav($event)">Calculator</div>
-    <div routerLink="/home" id="home" class="nav-item " (click)="selectNav($event)">Home</div>
-    <div class="nav-res" (window:resize)="response($event)" (click)="expand()">=</div>
+  <div class="name"> BIODIVERSITY FOOTPRINT CALCULATOR </div>
+  <div routerLink="/about" id="about" class="nav-item" (click)="selectNav($event)">About</div>
+  <div routerLink="/methodology" id="methodology" class="nav-item" (click)="selectNav($event)">Methodology</div>
+  <div routerLink="/calculator" id="calculator" class="nav-item selected" (click)="selectNav($event)">Calculator</div>
+  <div routerLink="/home" id="home" class="nav-item " (click)="selectNav($event)">Home</div>
+  <div class="nav-res" (window:resize)="response($event)" (click)="expand()">=</div>
 </nav>
 <div id="padding"></div>
 <router-outlet id="rlink" (activate)='onActivate($event)'></router-outlet>
-

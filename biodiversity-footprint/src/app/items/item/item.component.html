@@ -1,7 +1,7 @@
 <section [@flyInOut]="state">
     <div class="item">
         <input type="text" id="itemName{{id}}" [(ngModel)]="name" class="txt text-input-box form-control" placeholder="Enter name"
-            (change)="setItemName($event.target.value)">
+            (change)="setItemName(value)">
         <div class="field-Container">
             <select (change)="setNewFootprintType($event.target.value)" class="input-item dropdown form-control" id="impactAreaDD{{id}}"
                 [(ngModel)]="impactArea">

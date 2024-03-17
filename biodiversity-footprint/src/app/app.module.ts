@@ -8,7 +8,7 @@ import { CalculatorPageComponent } from './components/calculator-page/calculator
 import { MethodologyPageComponent } from './components/methodology-page/methodology-page.component';
 import { AboutPageComponent } from './components/about-page/about-page.component';
 import { ItemComponent } from './items/item/item.component';
-import { GraphsComponent } from './graphs/graphs.component';
+import { GraphsComponent } from './graphs/graphs.component'; 
 import { FormsModule } from '@angular/forms';
 import { ScenarioComponent} from './scenario/scenario.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +25,7 @@ import { TransportItemComponent } from './items/transport-item/transport-item.co
     ItemComponent,
     GraphsComponent,
     ScenarioComponent,
-    TransportItemComponent
+    TransportItemComponent 
   ],
   imports: [
     BrowserModule,

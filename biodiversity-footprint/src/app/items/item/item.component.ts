@@ -44,11 +44,11 @@ export class ItemComponent implements OnInit {
   res: any;
   other: number;
   itemInfo: any;
-  footprintTypes = [];
-  selectedFTypes = undefined;
+  footprintTypes: string[] = [];
+  selectedFTypes: any[] = [];
   showExtraDropdown = false;
   showExtraInput = false;
-  impactArea: "";
+  impactArea:string = "";
   state: string;
 
   name = "";
@@ -63,7 +63,7 @@ export class ItemComponent implements OnInit {
     this.state = "in";
     this.res = this.getRes();
     let keys = Object.keys(this.res);
-    keys.forEach(element => {
+    keys.forEach((element: string) => {
       if (element != "Transport") {
         this.footprintTypes.push(element);
       }
@@ -79,7 +79,7 @@ export class ItemComponent implements OnInit {
     };
   }
 
-  createNewItemFromExcel(factorName, category, subCategory,MSA,percentage){
+  createNewItemFromExcel(factorName:string, category: string, subCategory: string,MSA: number,percentage: number){
     this.itemInfo.id=this.id;
     this.name =  factorName;
     this.impactArea = category;
@@ -102,7 +102,7 @@ export class ItemComponent implements OnInit {
         this.showExtraInput = true;
         this.other = this.cpyData.extraInput;
       }else{
-        this.res["" + this.impactArea + ""].forEach(element => {
+        this.res["" + this.impactArea + ""].forEach((element: any) => {
           if (Object.keys(element)[0] == this.type) {
             this.itemInfo.MSA = element[this.type];
             this.msa = element[this.type];
@@ -146,7 +146,7 @@ export class ItemComponent implements OnInit {
   setNewFootprintType(type: any) {
     this.impactArea = type;
     this.type = Object.keys(this.res["" + type + ""][0])[0];
-    let a = [];
+    let a: string[] = [];
 
     if(this.impactArea.includes("Land")){
 
@@ -157,8 +157,8 @@ export class ItemComponent implements OnInit {
       this.placeholderValue = "Enter quantity";
     }
 
-    this.res["" + type + ""].forEach(element => {
-      a.push(Object.keys(element));
+    this.res["" + type + ""].forEach((element: any) => {
+      a.push(String(Object.keys(element)));
     });
     this.selectedFTypes = a;
     this.showExtra(a[0][0]);
@@ -169,7 +169,7 @@ export class ItemComponent implements OnInit {
     if (!this.cpyData) {
       this.itemInfo.type = chage;
     }
-    this.res["" + this.impactArea + ""].forEach(element => {
+    this.res["" + this.impactArea + ""].forEach((element: any) => {
       if (Object.keys(element)[0] == chage && !this.cpyData) {
         this.itemInfo.MSA = element[chage];
         this.msa = element[chage];
@@ -235,7 +235,7 @@ export class ItemComponent implements OnInit {
 
   //get msa of the item
   getMsa() {
-    this.res["" + this.impactArea + ""].forEach(element => {
+    this.res["" + this.impactArea + ""].forEach((element: any) => {
       if (Object.keys(element)[0] == this.type) {
         this.msa = element[this.type]
       }
@@ -244,17 +244,17 @@ export class ItemComponent implements OnInit {
 
   //get data of the item
   getData() {
-    let result = {};
-    result["name"] = this.name;
-    result["impactArea"] = this.impactArea
-    result["type"] = this.type;
-    if(this.showExtraInput){
-      result["extraInput"] = this.other;
-    }else{
-      result["extraInput"] = false;
+    let extraInput = this.other;
+    if(!this.showExtraInput){
+      extraInput = 0;
     }
-    result["amount"] = this.amount;
-    result["economicAlocation"] = this.economicAlocation;
-    return result;
+    return {
+      name: this.name,
+      impactArea: this.impactArea,
+      type: this.type,
+      extraInput,
+      amount: this.amount,
+      economicAlocation: this.economicAlocation
+    };
   }
 }

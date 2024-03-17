@@ -1,11 +1,12 @@
 import { Component, OnInit, ElementRef, ViewChildren, ContentChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { ScenarioComponent } from '../../scenario/scenario.component';
 import { Result } from '../../result.class';
-import * as TableToExcel from 'table-to-excel';
-import * as ExcelToJson from 'xlsx-to-json';
+//import * as TableToExcel from 'table-to-excel';
+import * as XLSX from 'xlsx';
+//import from 'xlsx-to-json';
 
 
-import * as $ from 'jquery';
+import 'jquery';
 import { GraphsComponent } from '../../graphs/graphs.component';
 
 @Component({
@@ -18,18 +19,19 @@ import { GraphsComponent } from '../../graphs/graphs.component';
 
 export class CalculatorPageComponent implements OnInit {
 
-  @ViewChildren(ScenarioComponent) scenarios: QueryList<ScenarioComponent>
-  @ContentChildren(ScenarioComponent) scenariosContent: QueryList<ScenarioComponent>
-  @ViewChildren(GraphsComponent) graphs: QueryList<GraphsComponent>;
+  @ViewChildren(ScenarioComponent) scenarios: QueryList<ScenarioComponent> = new QueryList;
+  @ContentChildren(ScenarioComponent) scenariosContent: QueryList<ScenarioComponent> = new QueryList;
+  @ViewChildren(GraphsComponent) graphs: QueryList<GraphsComponent> = new QueryList;
   addedScenarios: ScenarioComponent[] = []; //array with items
+
   coppiedScenarios = 0;
-  cpyArr = [undefined];
+  cpyArr: any[] = [undefined];
   allResults: Result[][] = [];
   flattenedArray: Result[] = [];
 
-  biodiversitySumPerScenario = [];
+  biodiversitySumPerScenario: any[] = [];
 
-  scenariosReference: QueryList<ScenarioComponent>;
+  scenariosReference: QueryList<ScenarioComponent> = new QueryList;
 
   constructor(private cd: ChangeDetectorRef) {
     let newItem = new ScenarioComponent;
@@ -40,10 +42,26 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //exports the table with certain id
-  download($event, id) {
-    var tableToExcel = new TableToExcel();
-    tableToExcel.render("resultTable" + id);
-  }
+  // TODO: ombouwen zie voorbeeld hieronder
+  //download($event: any, id: number) {
+    //var tableToExcel = new TableToExcel();
+    //tableToExcel.render("resultTable" + id);
+  //}
+
+  // exportexcel(): void
+  // {
+  //   /* pass here the table id */
+  //   let element = document.getElementById('excel-table');
+  //   const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+  //   /* generate workbook and add the worksheet */
+  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+  //   /* save to file */  
+  //   XLSX.writeFile(wb, this.fileName);
+
+  // }
 
   ngAfterViewInit() {
     this.cd.detectChanges();
@@ -115,7 +133,7 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //deletes scenario that has id of $event
-  deleteScenario($event) {
+  deleteScenario($event: any) {
     if (this.scenarios.length === 1) {
 
     } else {
@@ -143,14 +161,14 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //adds new scenario
-  onAddScenario($event1) {
+  onAddScenario($event1: any) {
     let newItem = new ScenarioComponent;
     this.addedScenarios.push(newItem);
     this.cpyArr.push(undefined);
   }
 
   //updates graph with new results
-  updateGraphs($event, index) {
+  updateGraphs($event: any, index: number) {
     this.allResults[index] = [];
     this.addedScenarios[index].title = $event[0].title;
     this.biodiversitySumPerScenario[index] = 0;
@@ -241,13 +259,13 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   //create new copied scenario
-  cpyEvent($event) {
+  cpyEvent($event: any) {
     this.cpyArr.push($event);
     this.addedScenarios.push(new ScenarioComponent);
   }
 
   //sort table alphabetically
-  sortTable(n) {
+  sortTable(n: number) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("resultTable");
     switching = true;
@@ -258,59 +276,61 @@ export class CalculatorPageComponent implements OnInit {
     while (switching) {
       //start by saying: no switching is done:
       switching = false;
-      rows = table.getElementsByTagName("TR");
-      /*Loop through all table rows (except the
-      first, which contains table headers):*/
-      for (i = 1; i < (rows.length - 1); i++) {
-        //start by saying there should be no switching:
-        shouldSwitch = false;
-        /*Get the two elements you want to compare,
-        one from current row and one from the next:*/
-        x = rows[i].getElementsByTagName("TD")[n];
-        y = rows[i + 1].getElementsByTagName("TD")[n];
-        /*check if the two rows should switch place,
-        based on the direction, asc or desc:*/
-        if (dir == "asc") {
-          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-            //if so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        } else if (dir == "desc") {
-          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            //if so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
+      if (table) {
+        rows = table.getElementsByTagName("TR");
+        /*Loop through all table rows (except the
+        first, which contains table headers):*/
+        for (i = 1; i < (rows.length - 1); i++) {
+          //start by saying there should be no switching:
+          shouldSwitch = false;
+          /*Get the two elements you want to compare,
+          one from current row and one from the next:*/
+          x = rows[i].getElementsByTagName("TD")[n];
+          y = rows[i + 1].getElementsByTagName("TD")[n];
+          /*check if the two rows should switch place,
+          based on the direction, asc or desc:*/
+          if (dir == "asc") {
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              //if so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
+          } else if (dir == "desc") {
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+              //if so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
           }
         }
-      }
-      if (shouldSwitch) {
-        /*If a switch has been marked, make the switch
-        and mark that a switch has been done:*/
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-        //Each time a switch is done, increase this count by 1:
-        switchcount++;
-      } else {
-        /*If no switching has been done AND the direction is "asc",
-        set the direction to "desc" and run the while loop again.*/
-        if (switchcount == 0 && dir == "asc") {
-          dir = "desc";
+        if (shouldSwitch) {
+          /*If a switch has been marked, make the switch
+          and mark that a switch has been done:*/
+          rows[i].parentNode?.insertBefore(rows[i + 1], rows[i]);
           switching = true;
+          //Each time a switch is done, increase this count by 1:
+          switchcount++;
+        } else {
+          /*If no switching has been done AND the direction is "asc",
+          set the direction to "desc" and run the while loop again.*/
+          if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+          }
         }
       }
     }
   }
 
   //sort table numerically
-  sortTableNumerical(n) {
+  sortTableNumerical(n: number) {
     var table, rows, switching, i, x, y, shouldSwitch, switchCount = 0;
     table = document.getElementById("resultTable");
     switching = true;
     var dir = "asc";
     /*Make a loop that will continue until
     no switching has been done:*/
-    while (switching) {
+    while (switching && table) {
       //start by saying: no switching is done:
       switching = false;
       rows = table.getElementsByTagName("TR");
@@ -341,7 +361,7 @@ export class CalculatorPageComponent implements OnInit {
       if (shouldSwitch) {
         /*If a switch has been marked, make the switch
         and mark that a switch has been done:*/
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        rows[i].parentNode?.insertBefore(rows[i + 1], rows[i]);
         switching = true;
         switchCount++;
       } else {

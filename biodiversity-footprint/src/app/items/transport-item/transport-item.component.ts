@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, SimpleChange, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import * as $ from 'jquery';
-import { isArray } from 'util';
+
 @Component({
   selector: 'app-transport-item',
   templateUrl: './transport-item.component.html',
@@ -46,7 +46,7 @@ export class TransportItemComponent implements OnInit {
   other: number;
   economicAlocation: number;
 
-  transportTypes = [];
+  transportTypes: any[] = [];
   constructor() {
     this.state = "in";
     this.res = this.getRes();
@@ -70,7 +70,7 @@ export class TransportItemComponent implements OnInit {
       }else{
         this.showOther = false;
       }
-      this.changes(undefined);
+      this.changes();
     }
   }
 
@@ -96,7 +96,7 @@ export class TransportItemComponent implements OnInit {
   }
 
   //notify other component that there has been a change and send changed data
-  changes($event) {
+  changes() {
     if (Array.isArray(this.type)) {
       this.type = this.type[0];
     }
@@ -107,23 +107,23 @@ export class TransportItemComponent implements OnInit {
       this.showOther = false;
     }
 
-    let result = {
-      "id": this.id,
-      "name": this.name,
-      "type": this.type,
-      "distance": this.distance,
-      "weight": this.weight,
-      "impactArea": "Transport",
-      "economicAlocation": this.economicAlocation
-    }
-    if (this.showOther) {
-      result["msa"] = this.other;
-    } else {
-      this.res["Transport"].forEach(element => {
+    let msa = this.other;
+    if (!this.showOther) {
+      this.res["Transport"].forEach((element: any) => {
         if (Object.keys(element)[0] == this.type) {
           result["msa"] = element[this.type]
         }
       });
+    }
+    let result = {
+      id: this.id,
+      name: this.name,
+      type: this.type,
+      distance: this.distance,
+      weight: this.weight,
+      impactArea: "Transport",
+      economicAlocation: this.economicAlocation,
+      msa
     }
 
     this.changesEvent.emit(result);
@@ -131,21 +131,19 @@ export class TransportItemComponent implements OnInit {
 
   //get item data
   getData() {
-    let result = {
-      "name": this.name,
-      "type": this.type,
-      "distance": this.distance,
-      "weight": this.weight,
-      "impactArea": "Transport",
-      "economicAlocation": this.economicAlocation,
+
+    let other=this.other; 
+    if(!this.showOther){
+       other =0;
+    }
+    return  {
+      name: this.name,
+      type: this.type,
+      distance: this.distance,
+      weight: this.weight,
+      impactArea: "Transport",
+      economicAlocation: this.economicAlocation,
     }
 
-    if(this.showOther){
-      result["other"]=this.other;
-    }else{
-      result["other"]=false;
-    }
-
-    return result;
   }
 }

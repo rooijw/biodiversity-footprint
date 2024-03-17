@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { Result } from '../../app/result.class';
 import { SubCategory } from '../../app/subCategory';
-import * as Chart from 'chart.js';
-import * as GraphToPdf from 'jspdf';
+import 'chart.js';
+import 'jspdf';
 import * as $ from 'jquery';
 import { ScenarioComponent } from '../scenario/scenario.component';
 

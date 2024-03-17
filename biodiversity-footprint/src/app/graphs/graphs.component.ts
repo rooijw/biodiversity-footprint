@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild, QueryList } from '@angular/core';
 import { Result } from '../../app/result.class';
 import { Chart } from 'chart.js';
 import { SubCategory } from '../../app/subCategory';
@@ -25,8 +25,8 @@ export class GraphsComponent implements OnInit {
   //colors to be used in transport
   transportColors = ["#191919", "#999999", "#323232", "#b2b2b2", "#4c4c4c", "#cccccc", "#665666" ,"#e5e5e5", "#7f7f7f", "#000000"];
 
-  @Input() scenariosArray: ScenarioComponent[];
 
+  @Input() scenarios: QueryList<ScenarioComponent> 
 
   constructor() {
   }
@@ -75,7 +75,7 @@ export class GraphsComponent implements OnInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.scenariosArray
+      this.scenarios.toArray();
     });
   }
   init() {

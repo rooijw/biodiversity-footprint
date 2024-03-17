@@ -32,7 +32,8 @@ export class MethodologyPageComponent implements OnInit {
   }
 
   //show footprint items with matching type
-  setNewFootprintType(type: any) {
+  setNewFootprintType(event: any) {
+    const type = event.target.value.split(',')[1];
     this.impactArea = type;
     this.type = Object(this.res["" + type + ""]);
     let a: any[] = [];

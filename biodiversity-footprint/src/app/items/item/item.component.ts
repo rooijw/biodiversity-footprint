@@ -143,7 +143,8 @@ export class ItemComponent implements OnInit {
   }
 
   //set item 's impact area and change other input fields accordingly
-  setNewFootprintType(type: any) {
+  setNewFootprintType(event: any) {
+    const type = event.target.split(',')[1];
     this.impactArea = type;
     this.type = Object.keys(this.res["" + type + ""][0])[0];
     let a: string[] = [];
@@ -165,7 +166,8 @@ export class ItemComponent implements OnInit {
   }
 
   //enable extra to be shown if necessary
-  showExtra(chage: any) {
+  showExtra(event: any) {
+    const chage = event.target.split(',')[1]
     if (!this.cpyData) {
       this.itemInfo.type = chage;
     }
@@ -185,21 +187,23 @@ export class ItemComponent implements OnInit {
   }
 
   //set item name and notify that result has changed
-  setItemName(name: string) {
-    this.name = name;
-    this.itemInfo.name = name;
+  setItemName(event: any) {
+    this.name = event.target.value;
+    this.itemInfo.name = event.target.value;
     this.resultChanged();
   }
 
   //set item amount and notify that result has changed
-  setItemAmount(amount: number) {
+  setItemAmount(event: any) {
+    const amount = event.target.value;
     this.amount = amount;
     this.itemInfo.amount = amount;
     this.resultChanged();
   }
 
   //set item economic allocation and notify that result has changed
-  setItemEconomicAlocation(economicAlocation: number){
+  setItemEconomicAlocation(event: any){
+    const economicAlocation:number = event.target.value;
     this.economicAlocation = economicAlocation;
     this.itemInfo.economicAlocation = economicAlocation;
     this.resultChanged();

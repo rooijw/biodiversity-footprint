@@ -88,7 +88,7 @@ These values are based on existing cause-effect relations from GLOBIO. If a land
   <section id="section-4" class="bg-faded p-4 my-3" style="background:#f2f2f2   ">
     <h2>Support and full analysis</h2>
     <p>
-      In case you would like to get assistance with the inventory of input data, or would like to get a more comprehensive analysis based on the full BF method, you can contact Wilbert van Rooij of Plansup (<a href="mailto:plansup.consult@gmail.com">plansup.consult@gmail.com</a>). Support can also be provided for an analysis of potential biodiversity friendly measures.<br><br>
+      In case you would like to get assistance with the inventory of input data, or would like to get a more comprehensive analysis based on the full BF method, you can contact Wilbert van Rooij of Plansup (<a href="mailto:plansup.consult@gmail.com">plansup.consult&#64;gmail.com</a>). Support can also be provided for an analysis of potential biodiversity friendly measures.<br><br>
       This BF calculator is limited to the impact of two pressure factors for three components within the value chain of a product. The calculator does not include all options of the full BF method.As a result the calculator is a first step to assess the footprint of a company or product.<br><br>
       A full BF analysis includes an inventory of all required input data. The analysis will be based on this information. Next to the impact assessment of land use and GHG, an analysis will be made of the impact by N and P emissions to water and, in case applicable, the impact of water extraction to water sensitive neighboring nature areas. The full analysis also includes more parts of the value chain (e.g. storage,  waste processing).<br><br>
     </p>
@@ -103,7 +103,7 @@ These values are based on existing cause-effect relations from GLOBIO. If a land
 
     <div class="field-Container">
       <!--<option [value]="" disabled selected>Select your option</option>-->
-      <select (change)="setNewFootprintType($event.target.value)" class="input-item dropdown form-control">
+      <select (change)="setNewFootprintType($event)" class="input-item dropdown form-control">
         <option selected disabled [ngValue]="null">Select Footprint </option>
         <option *ngFor="let type of footprintTypes" [value]="type">{{type}}</option>
       </select>

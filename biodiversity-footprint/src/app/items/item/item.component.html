@@ -1,9 +1,9 @@
 <section [@flyInOut]="state">
     <div class="item">
         <input type="text" id="itemName{{id}}" [(ngModel)]="name" class="txt text-input-box form-control" placeholder="Enter name"
-            (change)="setItemName(value)">
+            (change)="setItemName($event)">
         <div class="field-Container">
-            <select (change)="setNewFootprintType((event.target as HTMLSelectElement).value)" class="input-item dropdown form-control" id="impactAreaDD{{id}}"
+            <select (change)="setNewFootprintType($event)" class="input-item dropdown form-control" id="impactAreaDD{{id}}"
                 [(ngModel)]="impactArea">
                 <option *ngFor="let type of footprintTypes" [value]="type">{{type}}</option>
             </select>
@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="field-Container">
-            <select id="typeDD{{id}}" class="dropdown form-control" (change)="showExtra($event.target.value)" [(ngModel)]="type">
+            <select id="typeDD{{id}}" class="dropdown form-control" (change)="showExtra($event)" [(ngModel)]="type">
                 <option *ngIf="selectedFTypes == undefined" value="Select" disabled="true" selected>Select</option>
                 <option *ngFor="let type of selectedFTypes" [value]="type">{{type}}</option>
             </select>
@@ -36,12 +36,12 @@
 
         <div class="field-Container">
             <input id="amount{{id}}" [(ngModel)]="amount" type="number" class="text-input-box form-control" placeholder="{{placeholderValue}}"
-                (change)="setItemAmount($event.target.value)">
+                (change)="setItemAmount($event)">
             <span id="xButtonItem" (click)="deleteItem()">X</span>
         </div>
         <div class="field-Container eco">
             <input id="economicAlocation{{id}}" [(ngModel)]="economicAlocation" class="ea input-item text-input-box form-control" placeholder="Economic alocation"
-                (change)="setItemEconomicAlocation((event.target as HTMLInputElement).value)">
+                (change)="setItemEconomicAlocation($event)">
             <div class="info-tooltip">i
                 <span class="tooltip-text">In case of multiple use of land or if the production process is also used for other products, the footprint
                     share can be calculated by the fraction of the economic value of the product divided by the total economic

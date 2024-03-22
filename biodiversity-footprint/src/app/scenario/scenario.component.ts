@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChildren, QueryList, ViewChild, ElementRef } from '@angular/core';
 import { ItemComponent } from '../items/item/item.component';
 import { TransportItemComponent } from '../items/transport-item/transport-item.component'
 import { Result } from '../../app/result.class';
@@ -29,6 +29,8 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   ]
 })
 export class ScenarioComponent implements OnInit {
+  @ViewChild('collapseContainer') collapseContainer: ElementRef;
+  @ViewChild('collapseButton') collapseButton: ElementRef;
   @Input() id: number = 0;
   @Input() cpyInfo: any;
   @ViewChildren(ItemComponent) items: QueryList<ItemComponent> = new QueryList;
@@ -422,16 +424,14 @@ export class ScenarioComponent implements OnInit {
 
   //collapse or show the scenario and rotate the button accordingly
   collapseScenario(id: number) {
-    if ($("#collapse-container" + id).hasClass("show")) {
-      $(".collapseButton" + id).css({ "transform": "rotate(0deg)" });
-      $("#collapse-container" + id).removeClass("collapse show") //.addClass("collapsing");
-      // $("#collapse-container"+id).removeClass("collapsing");
-      $("#collapse-container" + id).addClass("collapse");
+    if (this.collapseContainer.nativeElement.classList.contains('show')) {
+      this.collapseButton.nativeElement.style.transform = 'rotate(0deg)';
+      this.collapseContainer.nativeElement.classList.remove('show');
+      this.collapseContainer.nativeElement.classList.add('collapse');
     } else {
-      $(".collapseButton" + id).css({ "transform": "rotate(180deg)" });
-      $("#collapse-container" + id).removeClass("collapse")//.addClass("collapsing");
-      $("#collapse-container" + id).removeClass("collapsing");
-      $("#collapse-container" + id).addClass("collapse show");
+      this.collapseButton.nativeElement.style.transform = 'rotate(180deg)';
+      this.collapseContainer.nativeElement.classList.remove('collapse');
+      this.collapseContainer.nativeElement.classList.add('show');
     }
   }
   /*

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import * as $ from 'jquery';
+import res from "../../../assets/res.json";
 
 @Component({
   selector: 'app-item',
@@ -41,7 +42,7 @@ export class ItemComponent implements OnInit {
   @Input() prodType: string;
   @Input() cpyData: any = {};
 
-  res: any;
+  public res: any = res;
   other: number;
   itemInfo: any;
   footprintTypes: string[] = [];
@@ -61,7 +62,6 @@ export class ItemComponent implements OnInit {
 
   constructor() {
     this.state = "in";
-    this.res = this.getRes();
     let keys = Object.keys(this.res);
     keys.forEach((element: string) => {
       if (element != "Transport") {
@@ -123,28 +123,11 @@ export class ItemComponent implements OnInit {
     } else {
       this.setNewFootprintType(this.footprintTypes[0]);
     }
-
-
   }
-
-  //get data from json document
-  getRes() {
-    let json;
-    $.ajax({
-      'async': false,
-      'global': false,
-      'url': "/assets/res.json",
-      'dataType': "json",
-      'success': function (data) {
-        json = data;
-      }
-    });
-    return json;
-  }
-
+  
   //set item 's impact area and change other input fields accordingly
   setNewFootprintType(event: any) {
-    const type = event.target.split(',')[1];
+    const type = event;
     this.impactArea = type;
     this.type = Object.keys(this.res["" + type + ""][0])[0];
     let a: string[] = [];
@@ -167,7 +150,7 @@ export class ItemComponent implements OnInit {
 
   //enable extra to be shown if necessary
   showExtra(event: any) {
-    const chage = event.target.split(',')[1]
+    const chage = event;//.target.split(',')[1]
     if (!this.cpyData) {
       this.itemInfo.type = chage;
     }

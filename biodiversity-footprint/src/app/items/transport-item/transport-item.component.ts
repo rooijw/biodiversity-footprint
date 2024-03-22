@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, SimpleChange, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import * as $ from 'jquery';
+import res from "../../../assets/res.json";
 
 @Component({
   selector: 'app-transport-item',
@@ -35,10 +36,9 @@ export class TransportItemComponent implements OnInit {
   @Input() id: number;
   @Input() cpyData: any;
   state: string;
-
+  public res: any = res;
   showOther: boolean = false;
   prodType: "transport";
-  res: any;
   name: string = "";
   type: string = "";
   distance: number;
@@ -49,7 +49,6 @@ export class TransportItemComponent implements OnInit {
   transportTypes: any[] = [];
   constructor() {
     this.state = "in";
-    this.res = this.getRes();
     for (let i = 0; i < this.res["Transport"].length; i++) {
       this.transportTypes.push(Object.keys(this.res["Transport"][i]));
     }
@@ -80,20 +79,6 @@ export class TransportItemComponent implements OnInit {
     this.deleteItemOutput.emit(this.id);
   }
 
-  //get results from json document
-  getRes() {
-    let json;
-    $.ajax({
-      'async': false,
-      'global': false,
-      'url': "/assets/res.json",
-      'dataType': "json",
-      'success': function (data) {
-        json = data;
-      }
-    });
-    return json;
-  }
 
   //notify other component that there has been a change and send changed data
   public changes() {

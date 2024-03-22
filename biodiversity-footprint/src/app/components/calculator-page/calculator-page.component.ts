@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChildren, ContentChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChildren, ContentChildren, QueryList, ChangeDetectorRef, ViewChild} from '@angular/core';
 import { ScenarioComponent } from '../../scenario/scenario.component';
 import { Result } from '../../result.class';
 //import * as TableToExcel from 'table-to-excel';
@@ -6,7 +6,6 @@ import * as XLSX from 'xlsx';
 //import from 'xlsx-to-json';
 
 
-import 'jquery';
 import { GraphsComponent } from '../../graphs/graphs.component';
 
 @Component({
@@ -18,12 +17,11 @@ import { GraphsComponent } from '../../graphs/graphs.component';
 })
 
 export class CalculatorPageComponent implements OnInit {
-
+  
   @ViewChildren(ScenarioComponent) scenarios: QueryList<ScenarioComponent> = new QueryList;
   @ContentChildren(ScenarioComponent) scenariosContent: QueryList<ScenarioComponent> = new QueryList;
   @ViewChildren(GraphsComponent) graphs: QueryList<GraphsComponent> = new QueryList;
   addedScenarios: ScenarioComponent[] = []; //array with items
-
   coppiedScenarios = 0;
   cpyArr: any[] = [undefined];
   allResults: Result[][] = [];
@@ -33,9 +31,22 @@ export class CalculatorPageComponent implements OnInit {
 
   scenariosReference: QueryList<ScenarioComponent> = new QueryList;
 
+  @ViewChild('collapseContainer') collapseContainer: ElementRef;
+  @ViewChild('collapseButton') collapseButton: ElementRef;
+  @ViewChild('collapseContainerLandUse') collapseContainerLandUse: ElementRef;
+  @ViewChild('collapseButtonLandUse') collapseButtonLandUse: ElementRef;
+  @ViewChild('collapseContainerGHG') collapseContainerGHG: ElementRef;
+  @ViewChild('collapseButtonGHG') collapseButtonGHG: ElementRef;
+  @ViewChild('collapseContainerTransport') collapseContainerTransport: ElementRef;
+  @ViewChild('collapseButtonTransport') collapseButtonTransport: ElementRef;
+  @ViewChild('collapseContainerEconomicAllocation') collapseContainerEconomicAllocation: ElementRef;
+  @ViewChild('collapseButtonEconomicAllocation') collapseButtonEconomicAllocation: ElementRef;
+
+
   constructor(private cd: ChangeDetectorRef) {
     let newItem = new ScenarioComponent;
     this.addedScenarios.push(newItem);
+    
   }
 
   ngOnInit() {
@@ -66,71 +77,71 @@ export class CalculatorPageComponent implements OnInit {
   // }
 
   ngAfterViewInit() {
-    this.cd.detectChanges();
+    this.cd.detectChanges(); 
   }
 
   //collapses or shows how to container
-  public colapseHowTo() {
-    if ($("#collapse-container").hasClass("show")) {
-      $("#collapseButton").css({ "transform": "rotate(0deg)" });
-      $("#collapse-container").removeClass("collapse show") //.addClass("collapsing");
-      $("#collapse-container").addClass("collapse");
+  public collapseHowTo() {
+    if (this.collapseContainer.nativeElement.classList.contains('show')) {
+      this.collapseButton.nativeElement.style.transform = 'rotate(0deg)';
+      this.collapseContainer.nativeElement.classList.remove('show');
+      this.collapseContainer.nativeElement.classList.add('collapse');
     } else {
-      $("#collapseButton").css({ "transform": "rotate(180deg)" });
-      $("#collapse-container").removeClass("collapse")//.addClass("collapsing");
-      $("#collapse-container").addClass("collapse show");
+      this.collapseButton.nativeElement.style.transform = 'rotate(180deg)';
+      this.collapseContainer.nativeElement.classList.remove('collapse');
+      this.collapseContainer.nativeElement.classList.add('show');
     }
   }
 
   //collapses or shows how to land use container
-  public colapseLandUse() {
-    if ($("#collapse-container-landuse").hasClass("show")) {
-      $("#collapseButtonLandUse").css({ "transform": "rotate(0deg)" });
-      $("#collapse-container-landuse").removeClass("collapse show") //.addClass("collapsing");
-      $("#collapse-container-landuse").addClass("collapse");
+  public collapseLandUse() {
+    if (this.collapseContainerLandUse.nativeElement.classList.contains('show')) {
+      this.collapseButtonLandUse.nativeElement.style.transform = 'rotate(0deg)';
+      this.collapseContainerLandUse.nativeElement.classList.remove('show');
+      this.collapseContainerLandUse.nativeElement.classList.add('collapse');
     } else {
-      $("#collapseButtonLandUse").css({ "transform": "rotate(180deg)" });
-      $("#collapse-container-landuse").removeClass("collapse")//.addClass("collapsing");
-      $("#collapse-container-landuse").addClass("collapse show");
+      this.collapseButtonLandUse.nativeElement.style.transform = 'rotate(180deg)';
+      this.collapseContainerLandUse.nativeElement.classList.remove('collapse');
+      this.collapseContainerLandUse.nativeElement.classList.add('show');
     }
   }
 
   //collapses or shows how to GHG container
-  public colapseGHG() {
-    if ($("#collapse-container-ghg").hasClass("show")) {
-      $("#collapseButtonGHG").css({ "transform": "rotate(0deg)" });
-      $("#collapse-container-ghg").removeClass("collapse show") //.addClass("collapsing");
-      $("#collapse-container-ghg").addClass("collapse");
+  public collapseGHG() {
+    if (this.collapseContainerGHG.nativeElement.classList.contains('show')) {
+      this.collapseButtonGHG.nativeElement.style.transform = 'rotate(0deg)';
+      this.collapseContainerGHG.nativeElement.classList.remove('show');
+      this.collapseContainerGHG.nativeElement.classList.add('collapse');
     } else {
-      $("#collapseButtonGHG").css({ "transform": "rotate(180deg)" });
-      $("#collapse-container-ghg").removeClass("collapse")//.addClass("collapsing");
-      $("#collapse-container-ghg").addClass("collapse show");
+      this.collapseButtonGHG.nativeElement.style.transform = 'rotate(180deg)';
+      this.collapseContainerGHG.nativeElement.classList.remove('collapse');
+      this.collapseContainerGHG.nativeElement.classList.add('show');
     }
   }
 
   //collapses or shows how to transport container
-  public colapseTransport() {
-    if ($("#collapse-container-transport").hasClass("show")) {
-      $("#collapseButtonTransport").css({ "transform": "rotate(0deg)" });
-      $("#collapse-container-transport").removeClass("collapse show") //.addClass("collapsing");
-      $("#collapse-container-transport").addClass("collapse");
+  public collapseTransport() {
+    if (this.collapseContainerTransport.nativeElement.classList.contains('show')) {
+      this.collapseButtonTransport.nativeElement.style.transform = 'rotate(0deg)';
+      this.collapseContainerTransport.nativeElement.classList.remove('show');
+      this.collapseContainerTransport.nativeElement.classList.add('collapse');
     } else {
-      $("#collapseButtonTransport").css({ "transform": "rotate(180deg)" });
-      $("#collapse-container-transport").removeClass("collapse")//.addClass("collapsing");
-      $("#collapse-container-transport").addClass("collapse show");
+      this.collapseButtonTransport.nativeElement.style.transform = 'rotate(180deg)';
+      this.collapseContainerTransport.nativeElement.classList.remove('collapse');
+      this.collapseContainerTransport.nativeElement.classList.add('show');
     }
   }
 
   //collapses or shows how to economic allocation container
   public collapseEconomicAllocation() {
-    if ($("#collapse-container-economic-allocation").hasClass("show")) {
-      $("#collapseButtonEconomicAllocation").css({ "transform": "rotate(0deg)" });
-      $("#collapse-container-economic-allocation").removeClass("collapse show") //.addClass("collapsing");
-      $("#collapse-container-economic-allocation").addClass("collapse");
+    if (this.collapseContainerEconomicAllocation.nativeElement.classList.contains('show')) {
+      this.collapseButtonEconomicAllocation.nativeElement.style.transform = 'rotate(0deg)';
+      this.collapseContainerEconomicAllocation.nativeElement.classList.remove('show');
+      this.collapseContainerEconomicAllocation.nativeElement.classList.add('collapse');
     } else {
-      $("#collapseButtonEconomicAllocation").css({ "transform": "rotate(180deg)" });
-      $("#collapse-container-economic-allocation").removeClass("collapse")//.addClass("collapsing");
-      $("#collapse-container-economic-allocation").addClass("collapse show");
+      this.collapseButtonEconomicAllocation.nativeElement.style.transform = 'rotate(180deg)';
+      this.collapseContainerEconomicAllocation.nativeElement.classList.remove('collapse');
+      this.collapseContainerEconomicAllocation.nativeElement.classList.add('show');
     }
   }
 
@@ -198,7 +209,7 @@ export class CalculatorPageComponent implements OnInit {
     }
 
     //update graph with flattened array
-    if (this.graphs !== undefined) {
+    if (this.graphs && this.graphs.first) {
       this.graphs.first.updateGraph(this.flattenedArray);
     }
   }

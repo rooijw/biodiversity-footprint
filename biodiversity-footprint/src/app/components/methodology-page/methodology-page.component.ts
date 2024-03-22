@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import res from "../../../assets/res2.json"
 
 
 @Component({
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class MethodologyPageComponent implements OnInit {
 
   title = 'Description of components';
-  res: any;
+  public res: any = res;
   footprintTypes: any[] = [];
 
   selectedFTypes: any[];
@@ -18,7 +19,6 @@ export class MethodologyPageComponent implements OnInit {
   emptyOption: boolean;
 
   constructor() {
-    this.res =  '../../../assets/res2.js';
     this.emptyOption = true;
     let keys = Object.keys(this.res);
     keys.forEach(element => {
@@ -33,7 +33,10 @@ export class MethodologyPageComponent implements OnInit {
 
   //show footprint items with matching type
   setNewFootprintType(event: any) {
-    const type = event.target.value.split(',')[1];
+    const type = event.target.value;
+    console.log(event.target.value)
+    console.log('hallo dit is de type ', type);
+    
     this.impactArea = type;
     this.type = Object(this.res["" + type + ""]);
     let a: any[] = [];

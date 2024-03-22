@@ -1,9 +1,9 @@
 <section id="scenarioSection" [@shrinkOut]="animate">
-
+  
   <div class="form-group">
     <h2 for="scenarioName" style="display:  inline-block">Scenario name</h2>
     <span id="xButton" (click)="deleteScenario()">X</span>
-    <span id="collapseButton" class="collapseButton{{id}}" (click)="collapseScenario(id)">V</span>
+    <span #collapseButton id="collapseButton" class="collapseButton{{id}}" (click)="collapseScenario(id)">V</span>
     <span id="copyButton" class="copyButton{{id}}" (click)="copyButtonPressed(id)"><img
       src="../../assets/copy-copy-icon-75335.png"></span>
     <input required ngModel name="scenarioName" #scenarioName="ngModel" [(ngModel)]="title"
@@ -11,7 +11,7 @@
            type="text" class="form-control" placeholder="Enter scenario title here">
     <div class="alert alert-danger" *ngIf="scenarioName.touched && !scenarioName.valid">Scenario name is required</div>
   </div>
-  <div id="collapse-container{{id}}" class="collapse show ">
+  <div #collapseContainer id="collapse-container{{id}}" class="collapse show ">
     <form>
       <div class="form-group">
         <h3 for="productDescription" style="display:inline-block">Product description</h3>

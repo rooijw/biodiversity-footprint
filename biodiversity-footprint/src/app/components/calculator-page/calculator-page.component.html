@@ -2,10 +2,10 @@
   <header class="text-center text-black p-3">
     <h2 class="display-4"> Biodiversity footprint calculator</h2>
   </header>
-  <section id="section-1" class="bg-faded p-4 my-3" style="background:#f2f2f2   ">
+    <section id="section-1" class="bg-faded p-4 my-3" style="background:#f2f2f2   ">
     <h2 style="display: inline-block;">How to use this tool</h2>
-    <span id="collapseButton" (click)="colapseHowTo()">V</span>
-    <div id="collapse-container" class="collapse show">
+    <span id="collapseButton" #collapseButton (click)="collapseHowTo()">V</span>
+    <div #collapseContainer class="collapse show">
       <p>This tool calculates the biodiversity impact of your company's supply chain, production process and transport that
         can be related to one or more products. With the calculator it is possible to calculate the biodiversity footprint
         for multiple scenarios. It is recommended to use the first scenario to describe the current situation and to use
@@ -27,9 +27,9 @@
         of emission per item.</p>
       <div id="tutorialCategory">
         <h5 style="display: inline-block;">Info on Land use type and area</h5>
-        <span id="collapseButtonLandUse" (click)="colapseLandUse()">V</span>
+        <span #collapseButtonLandUse id="collapseButtonLandUse" (click)="collapseLandUse()">V</span>
         <br/>
-        <div id="collapse-container-landuse" class="collapse">
+        <div #collapseContainerLandUse class="collapse">
           <p>After making an inventory of land use items per part of the chain you need to select to which land use category
             the item can be classified. In the list you can select from different land use categories. Select the land use
             category that corresponds best with the item in terms of use and management type. A table with a description
@@ -48,9 +48,9 @@
       </div>
       <div id="tutorialCategory">
         <h5 style="display: inline-block;">Info on GHG type and amount</h5>
-        <span id="collapseButtonGHG" (click)="colapseGHG()">V</span>
+        <span #collapseButtonGHG id="collapseButtonGHG" (click)="collapseGHG()">V</span>
         <br/>
-        <div id="collapse-container-ghg" class="collapse">
+        <div #collapseContainerGHG class="collapse">
           <p>Once you have made the list of emitters per part of the chain you need to quantify the type and
             amount of emission. You can select from a list of GHG and typical sources of energy. The list contains the most common categories.
             If you would like to calculate biodiversity impact of any other fossil fuel, renewable
@@ -66,9 +66,9 @@
       </div>
       <div id="tutorialCategory">
         <h5 style="display: inline-block;">Info on Transport emission</h5>
-        <span id="collapseButtonTransport" (click)="colapseTransport()">V</span>
+        <span #collapseButtonTransport id="collapseButtonTransport" (click)="collapseTransport()">V</span>
         <br/>
-        <div id="collapse-container-transport" class="collapse">
+        <div #collapseContainerTransport class="collapse">
           <p>The main impact of transport on biodiversity is by emission of the fuel used for the transport of raw materials,
             intermediate products (if any) and final product to the main distribution centres. The calculator includes the
             most common transport types. The CO2 equivalent values are automatically calculated after filling in
@@ -81,9 +81,9 @@
 
       <div id="tutorialCategory">
         <h5 style="display: inline-block;">Info on Economic allocation</h5>
-        <span id="collapseButtonEconomicAllocation" (click)="collapseEconomicAllocation()">V</span>
+        <span #collapseButtonEconomicAllocation id="collapseButtonEconomicAllocation" (click)="collapseEconomicAllocation()">V</span>
         <br/>
-        <div id="collapse-container-economic-allocation" class="collapse">
+        <div #collapseContainerEconomicAllocation class="collapse">
           <p>
             Economic allocation is a correction option offered for each footprint item. With this option it is possible
             to correct the biodiversity impact for other economical uses of the same area for which the company is

@@ -89,7 +89,7 @@ button.accordion{
     text-align: center;
     cursor: pointer;
     color: gray;
-    /* transform: rotate(180deg); */
+    transform: rotate(180deg); 
   }
 
   #collapseButton:hover{

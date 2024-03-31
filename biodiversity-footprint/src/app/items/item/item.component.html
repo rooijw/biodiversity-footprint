@@ -3,7 +3,7 @@
         <input type="text" id="itemName{{id}}" [(ngModel)]="name" class="txt text-input-box form-control" placeholder="Enter name"
             (change)="setItemName($event)">
         <div class="field-Container">
-            <select (change)="setNewFootprintType($event)" class="input-item dropdown form-control" id="impactAreaDD{{id}}"
+            <select (change)="onChangeFootPrintType($event)" class="input-item dropdown form-control" id="impactAreaDD{{id}}"
                 [(ngModel)]="impactArea">
                 <option *ngFor="let type of footprintTypes" [value]="type">{{type}}</option>
             </select>

@@ -19,7 +19,7 @@
           <span class="tooltip-text">Enter the name of the product for which the footprint is calculated in this scenario.
           </span>
         </div>
-        <input ngModel name="productDescription" [(ngModel)]="desc" #productDescription="ngModel"
+        <input ngModel name="productDescription" [(ngModel)]="desc" 
                (change)="updateProductDescription(productDescription)" type="text"
                id="productDescription{{id}}" class="form-control"
                placeholder="Enter the amount of product unit eg 1kg cookies/year">
@@ -57,7 +57,7 @@
                     [cpyData]="supplyChainCpyItems[i]"></app-item>
         </li>
       </ul>
-      <button id="add-supp-item-b" type="button" class="btn btn-default btn-lg my-2"
+      <button id="add-supp-item-b" type="button" [disabled]=addSupplyChainButtonDisabled class="btn btn-default btn-lg my-2"
               (click)="onAddSupplyChainItem()">Add item
       </button>
       <div class="info-tooltip">i

@@ -58,8 +58,8 @@ export class ItemComponent implements OnInit {
   msa = 0;
   economicAlocation: number;
   placeholderValue = "Enter value";
-
-
+  
+  
   constructor() {
     this.state = "in";
     let keys = Object.keys(this.res);
@@ -92,8 +92,8 @@ export class ItemComponent implements OnInit {
 
   //if item is being copied use cpy data for this item
   ngOnInit() {
+    console.log("Vthis.cpyData",this.cpyData);
     if (this.cpyData) {
-
       this.name = this.cpyData.name;
       this.amount = this.cpyData.amount;
       this.impactArea = this.cpyData.impactArea;
@@ -125,9 +125,13 @@ export class ItemComponent implements OnInit {
     }
   }
   
+  onChangeFootPrintType(event: any) {
+    this.setNewFootprintType(event.target.value);
+  }
+
   //set item 's impact area and change other input fields accordingly
-  setNewFootprintType(event: any) {
-    const type = event;
+  setNewFootprintType(type: string) {
+    console.log(this.res);
     this.impactArea = type;
     this.type = Object.keys(this.res["" + type + ""][0])[0];
     let a: string[] = [];

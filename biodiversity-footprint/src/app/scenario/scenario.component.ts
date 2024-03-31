@@ -2,7 +2,6 @@ import { Component, OnInit, Output, EventEmitter, Input, ViewChildren, QueryList
 import { ItemComponent } from '../items/item/item.component';
 import { TransportItemComponent } from '../items/transport-item/transport-item.component'
 import { Result } from '../../app/result.class';
-import 'jquery';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 
@@ -31,6 +30,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 export class ScenarioComponent implements OnInit {
   @ViewChild('collapseContainer') collapseContainer: ElementRef;
   @ViewChild('collapseButton') collapseButton: ElementRef;
+  
   @Input() id: number = 0;
   @Input() cpyInfo: any;
   @ViewChildren(ItemComponent) items: QueryList<ItemComponent> = new QueryList;
@@ -69,6 +69,7 @@ export class ScenarioComponent implements OnInit {
 
   nrOfItems: number = 0;
   animate = "any";
+  addSupplyChainButtonDisabled = false;
 
   //create first item components in this scenario
   constructor() {
@@ -83,6 +84,7 @@ export class ScenarioComponent implements OnInit {
     if (this.id != 0) {
       this.animate = "false";
     }
+    console.log(this.cpyInfo)
     //if scenario is being copied fill out new scenario with copy info
     if (this.cpyInfo) {
       this.title = this.cpyInfo.name + "(copy" + this.id + ")";
@@ -102,7 +104,7 @@ export class ScenarioComponent implements OnInit {
       this.supplyChainItems = [];
       this.productionSiteItems = [];
       this.transportItems = [];
-      this.cpyInfo.supplyChainItems.forEach((element: any) => {
+      this.cpyInfo.supplyChainItem.forEach((element: any) => {
         this.supplyChainCpyItems.push(element);
         this.supplyChainItems.push(new ItemComponent);
       });
@@ -143,11 +145,10 @@ export class ScenarioComponent implements OnInit {
 
   //add new supply chain item
   onAddSupplyChainItem() {
-
     let newItem = new ItemComponent;
     this.supplyChainItems.push(newItem);
     if (this.supplyChainItems.length == 10) {
-      $("#add-supp-item-b").prop('disabled', true);
+      this.addSupplyChainButtonDisabled = true;
     }
   }
 
@@ -210,7 +211,7 @@ export class ScenarioComponent implements OnInit {
     if ($event.impactArea === "Land use") {
 
       let msa = 0;
-      if ($event.economicAlocation != undefined && $event.economicAlocation != null && $event.economicAlocation != "") {
+      if ($event.economicAlocation && $event.economicAlocation != "") {
         let ea: number = $event.economicAlocation;
         if (!($event.economicAlocation <= 10 && $event.economicAlocation >= 0)) {
           ea = 1;
@@ -393,7 +394,7 @@ export class ScenarioComponent implements OnInit {
 
       this.sendGraphUpdate.emit(combinedArray);
     }, 400);
-    $("#add-supp-item-b").prop('disabled', false);
+    this.addSupplyChainButtonDisabled = false;
   }
 
   //delete production site item, remove it from results and update graph
@@ -484,12 +485,13 @@ export class ScenarioComponent implements OnInit {
         "data": item.getData()
       })
     })
+    console.log(this.desc)
     let result = {
-      name: $("#scenarioName" + this.id).val(),
+      name: this.title + '-' + this.id,
       showSupplyChain: this.showSupplyChain,
       showProductionSite: this.showProductionSite,
       showTransport: this.showTransport,
-      productDsc: $("#productDescription" + this.id).val(),
+      productDsc: this.desc + '-' + this.id,
       supplyChainItem: suppItems,
       prodSiteItems: prodItems,
       transportItems

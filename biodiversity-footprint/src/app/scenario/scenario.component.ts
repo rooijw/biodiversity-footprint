@@ -1,10 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChildren, QueryList, ViewChild, ElementRef } from '@angular/core';
 import { ItemComponent } from '../items/item/item.component';
 import { TransportItemComponent } from '../items/transport-item/transport-item.component'
 import { Result } from '../../app/result.class';
-import * as $ from 'jquery';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { easeBackInOut, easeBackIn } from 'd3';
 
 
 @Component({
@@ -30,10 +28,13 @@ import { easeBackInOut, easeBackIn } from 'd3';
   ]
 })
 export class ScenarioComponent implements OnInit {
-  @Input() id: number;
+  @ViewChild('collapseContainer') collapseContainer: ElementRef;
+  @ViewChild('collapseButton') collapseButton: ElementRef;
+  
+  @Input() id: number = 0;
   @Input() cpyInfo: any;
-  @ViewChildren(ItemComponent) items: QueryList<ItemComponent>;
-  @ViewChildren(TransportItemComponent) transportItemsChildren: QueryList<TransportItemComponent>;
+  @ViewChildren(ItemComponent) items: QueryList<ItemComponent> = new QueryList;
+  @ViewChildren(TransportItemComponent) transportItemsChildren: QueryList<TransportItemComponent> = new QueryList;
   @Output() deleteScenarioOutput = new EventEmitter<number>();
   @Output() sendGraphUpdate = new EventEmitter<any>();
   @Output() cpyEvent = new EventEmitter<any>();
@@ -45,14 +46,15 @@ export class ScenarioComponent implements OnInit {
   showTransport: boolean = false;
   radioButton: number = 1;
 
-  supplyChainCpyItems = [];
-  prodSiteCpyItems = [];
-  transportCpyItems = [];
+  supplyChainCpyItems: any[] = [];
+  prodSiteCpyItems: any[] = [];
+  transportCpyItems: any[] = [];
 
-  supplyChainTotalFootprint: number; //unit in MSA.ha
-  productionSiteTotalFootprint: number;
-  transportTotalFootprint: number;
-  totalScenarioFootprint: number;
+  // TODO kan dit zo
+  supplyChainTotalFootprint: number = 0; //unit in MSA.ha
+  productionSiteTotalFootprint: number = 0;
+  transportTotalFootprint: number = 0;
+  totalScenarioFootprint: number = 0;
 
   individualSupplyChainFootprints: Result[] = [];
   individualProductionSiteFootprints: Result[] = [];
@@ -65,8 +67,9 @@ export class ScenarioComponent implements OnInit {
   productionSiteItems: ItemComponent[] = [];
   transportItems: TransportItemComponent[] = [];
 
-  nrOfItems: number;
+  nrOfItems: number = 0;
   animate = "any";
+  addSupplyChainButtonDisabled = false;
 
   //create first item components in this scenario
   constructor() {
@@ -81,6 +84,7 @@ export class ScenarioComponent implements OnInit {
     if (this.id != 0) {
       this.animate = "false";
     }
+    console.log(this.cpyInfo)
     //if scenario is being copied fill out new scenario with copy info
     if (this.cpyInfo) {
       this.title = this.cpyInfo.name + "(copy" + this.id + ")";
@@ -100,16 +104,16 @@ export class ScenarioComponent implements OnInit {
       this.supplyChainItems = [];
       this.productionSiteItems = [];
       this.transportItems = [];
-      this.cpyInfo.supplyChainItems.forEach(element => {
+      this.cpyInfo.supplyChainItem.forEach((element: any) => {
         this.supplyChainCpyItems.push(element);
         this.supplyChainItems.push(new ItemComponent);
       });
-      this.cpyInfo.prodSiteItems.forEach(element => {
+      this.cpyInfo.prodSiteItems.forEach((element: any) => {
         this.prodSiteCpyItems.push(element);
         this.productionSiteItems.push(new ItemComponent);
       });
 
-      this.cpyInfo.transportItems.forEach(element => {
+      this.cpyInfo.transportItems.forEach((element: any) => {
         this.transportCpyItems.push(element);
         this.transportItems.push(new TransportItemComponent);
       });
@@ -140,17 +144,16 @@ export class ScenarioComponent implements OnInit {
   }
 
   //add new supply chain item
-  onAddSupplyChainItem($event1) {
-
+  onAddSupplyChainItem() {
     let newItem = new ItemComponent;
     this.supplyChainItems.push(newItem);
     if (this.supplyChainItems.length == 10) {
-      $("#add-supp-item-b").prop('disabled', true);
+      this.addSupplyChainButtonDisabled = true;
     }
   }
 
   //add new production site item
-  onAddProductionSiteItem($event2) {
+  onAddProductionSiteItem() {
     let newItem = new ItemComponent;
     this.productionSiteItems.push(newItem);
     if (this.productionSiteItems.length == 10) {
@@ -159,23 +162,23 @@ export class ScenarioComponent implements OnInit {
   }
 
   //add new transport item
-  onAddTransportItem($event) {
+  onAddTransportItem() {
     this.transportItems.push(new TransportItemComponent);
   }
 
   //remove production site item
-  onRemoveProductionSiteItem($event3) {
+  onRemoveProductionSiteItem() {
     this.productionSiteItems.pop();
   }
 
   //update scenario title
-  updateGraphsOrWE(change) {
+  updateGraphsOrWE(change: any) {
     this.scenarioTitle = (change.viewModel);
     this.changeScenarioName();
   }
 
   //update scenario product description
-  updateProductDescription(change) {
+  updateProductDescription(change: any) {
     this.productDescription = (change.viewModel);
     this.changeScenarioName();
   }
@@ -202,13 +205,13 @@ export class ScenarioComponent implements OnInit {
   }
 
   //receive new item info from supply chain
-  receiveItemInfoSupplyChain($event) {
+  receiveItemInfoSupplyChain($event: any) {
 
     //if the item is part of land use use formula for land use and create new reuslt with these results
     if ($event.impactArea === "Land use") {
 
       let msa = 0;
-      if ($event.economicAlocation != undefined && $event.economicAlocation != null && $event.economicAlocation != "") {
+      if ($event.economicAlocation && $event.economicAlocation != "") {
         let ea: number = $event.economicAlocation;
         if (!($event.economicAlocation <= 10 && $event.economicAlocation >= 0)) {
           ea = 1;
@@ -254,10 +257,10 @@ export class ScenarioComponent implements OnInit {
     }
     //add new copy item to supplyChainCopyItems
     this.supplyChainCpyItems[$event.id] = {
-      "name": $event.name,
-      "impactArea": $event.impactArea,
-      "type": $event.type,
-      "amount": $event.amount,
+      name: $event.name,
+      impactArea: $event.impactArea,
+      type: $event.type,
+      amount: $event.amount,
     };
     //decide which results to send to graph
     if (this.showSupplyChain && this.showProductionSite && this.showTransport) {
@@ -275,7 +278,7 @@ export class ScenarioComponent implements OnInit {
   }
 
   //receive new item info from production site
-  receiveItemInfoProductionSite($event) {
+  receiveItemInfoProductionSite($event: any) {
 
     //if the item is part of land use use formula for land use and create new reuslt with these results
     if ($event.impactArea === "Land use") {
@@ -345,7 +348,7 @@ export class ScenarioComponent implements OnInit {
   }
 
   //receive new item info from transport and use formula for transport and create new reuslt with these results
-  receiveTransportItemInfo($event) {
+  receiveTransportItemInfo($event: any) {
 
     let msa = 0;
     if ($event.economicAlocation != undefined && $event.economicAlocation != null && $event.economicAlocation != "") {
@@ -381,7 +384,7 @@ export class ScenarioComponent implements OnInit {
   }
 
   //delete supply chain item, remove it from results and update graph
-  deleteSupplyChainItem($event) {
+  deleteSupplyChainItem($event: any) {
     setTimeout(() => {
       this.supplyChainItems.splice($event, 1);
       this.individualSupplyChainFootprints.splice($event, 1);
@@ -391,11 +394,11 @@ export class ScenarioComponent implements OnInit {
 
       this.sendGraphUpdate.emit(combinedArray);
     }, 400);
-    $("#add-supp-item-b").prop('disabled', false);
+    this.addSupplyChainButtonDisabled = false;
   }
 
   //delete production site item, remove it from results and update graph
-  deleteProductionSiteItem($event) {
+  deleteProductionSiteItem($event: any) {
     setTimeout(() => {
       this.productionSiteItems.splice($event, 1);
       this.individualProductionSiteFootprints.splice($event, 1);
@@ -409,7 +412,7 @@ export class ScenarioComponent implements OnInit {
   }
 
   //delete tranport item, remove it from results and update graph
-  deleteTransportItem($event) {
+  deleteTransportItem($event: any) {
     setTimeout(() => {
       this.transportItems.splice($event, 1);
       this.individualTransportFootprints.splice($event, 1);
@@ -421,17 +424,15 @@ export class ScenarioComponent implements OnInit {
   }
 
   //collapse or show the scenario and rotate the button accordingly
-  collapseScenario(id) {
-    if ($("#collapse-container" + id).hasClass("show")) {
-      $(".collapseButton" + id).css({ "transform": "rotate(0deg)" });
-      $("#collapse-container" + id).removeClass("collapse show") //.addClass("collapsing");
-      // $("#collapse-container"+id).removeClass("collapsing");
-      $("#collapse-container" + id).addClass("collapse");
+  collapseScenario(id: number) {
+    if (this.collapseContainer.nativeElement.classList.contains('show')) {
+      this.collapseButton.nativeElement.style.transform = 'rotate(0deg)';
+      this.collapseContainer.nativeElement.classList.remove('show');
+      this.collapseContainer.nativeElement.classList.add('collapse');
     } else {
-      $(".collapseButton" + id).css({ "transform": "rotate(180deg)" });
-      $("#collapse-container" + id).removeClass("collapse")//.addClass("collapsing");
-      $("#collapse-container" + id).removeClass("collapsing");
-      $("#collapse-container" + id).addClass("collapse show");
+      this.collapseButton.nativeElement.style.transform = 'rotate(180deg)';
+      this.collapseContainer.nativeElement.classList.remove('collapse');
+      this.collapseContainer.nativeElement.classList.add('show');
     }
   }
   /*
@@ -466,15 +467,10 @@ export class ScenarioComponent implements OnInit {
 
   //gets data from scenario component
   getData() {
-    let result = {};
-    result["name"] = $("#scenarioName" + this.id).val();
-    result["showSupplyChain"] = this.showSupplyChain;
-    result["showProductionSite"] = this.showProductionSite;
-    result["showTransport"] = this.showTransport;
-    result["productDsc"] = $("#productDescription" + this.id).val();
-    let suppItems = [];
-    let prodItems = [];
-    let transportItems = [];
+
+    let suppItems: any[] = [];
+    let prodItems: any[] = [];
+    let transportItems: any[] = [];
     this.items.forEach(element => {
       if (element.prodType == "prodSite") {
         prodItems.push(element.getData())
@@ -489,16 +485,24 @@ export class ScenarioComponent implements OnInit {
         "data": item.getData()
       })
     })
+    console.log(this.desc)
+    let result = {
+      name: this.title + '-' + this.id,
+      showSupplyChain: this.showSupplyChain,
+      showProductionSite: this.showProductionSite,
+      showTransport: this.showTransport,
+      productDsc: this.desc + '-' + this.id,
+      supplyChainItem: suppItems,
+      prodSiteItems: prodItems,
+      transportItems
 
-    result["supplyChainItems"] = suppItems;
-    result["prodSiteItems"] = prodItems;
-    result["transportItems"] = transportItems;
+    };
     return result;
   }
 
   //gets data from an item
   getItemData() {
-    let result = [];
+    let result: any[] = [];
     this.items.forEach(item => {
       result.push({
         "prodType": item.prodType,

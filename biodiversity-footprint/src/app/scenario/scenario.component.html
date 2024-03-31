@@ -1,9 +1,9 @@
 <section id="scenarioSection" [@shrinkOut]="animate">
-
+  
   <div class="form-group">
     <h2 for="scenarioName" style="display:  inline-block">Scenario name</h2>
     <span id="xButton" (click)="deleteScenario()">X</span>
-    <span id="collapseButton" class="collapseButton{{id}}" (click)="collapseScenario(id)">V</span>
+    <span #collapseButton id="collapseButton" class="collapseButton{{id}}" (click)="collapseScenario(id)">V</span>
     <span id="copyButton" class="copyButton{{id}}" (click)="copyButtonPressed(id)"><img
       src="../../assets/copy-copy-icon-75335.png"></span>
     <input required ngModel name="scenarioName" #scenarioName="ngModel" [(ngModel)]="title"
@@ -11,7 +11,7 @@
            type="text" class="form-control" placeholder="Enter scenario title here">
     <div class="alert alert-danger" *ngIf="scenarioName.touched && !scenarioName.valid">Scenario name is required</div>
   </div>
-  <div id="collapse-container{{id}}" class="collapse show ">
+  <div #collapseContainer id="collapse-container{{id}}" class="collapse show ">
     <form>
       <div class="form-group">
         <h3 for="productDescription" style="display:inline-block">Product description</h3>
@@ -19,7 +19,7 @@
           <span class="tooltip-text">Enter the name of the product for which the footprint is calculated in this scenario.
           </span>
         </div>
-        <input ngModel name="productDescription" [(ngModel)]="desc" #productDescription="ngModel"
+        <input ngModel name="productDescription" [(ngModel)]="desc" 
                (change)="updateProductDescription(productDescription)" type="text"
                id="productDescription{{id}}" class="form-control"
                placeholder="Enter the amount of product unit eg 1kg cookies/year">
@@ -57,8 +57,8 @@
                     [cpyData]="supplyChainCpyItems[i]"></app-item>
         </li>
       </ul>
-      <button id="add-supp-item-b" type="button" class="btn btn-default btn-lg my-2"
-              (click)="onAddSupplyChainItem($event)">Add item
+      <button id="add-supp-item-b" type="button" [disabled]=addSupplyChainButtonDisabled class="btn btn-default btn-lg my-2"
+              (click)="onAddSupplyChainItem()">Add item
       </button>
       <div class="info-tooltip">i
         <span class="tooltip-text">If you want to add another land use item or greenhouse gas factor for this part of the chain press this button.
@@ -88,7 +88,7 @@
                     [cpyData]="prodSiteCpyItems[i]"></app-item>
         </li>
       </ul>
-      <button id="add-prod-item-b" (click)="onAddProductionSiteItem($event)" class="btn btn-default btn-lg my-3">Add
+      <button id="add-prod-item-b" (click)="onAddProductionSiteItem()" class="btn btn-default btn-lg my-3">Add
         item
       </button>
       <div class="info-tooltip">i
@@ -117,7 +117,7 @@
                               [cpyData]="transportCpyItems[i]"></app-transport-item>
         </li>
       </ul>
-      <button id="add-tr-item-b" (click)="onAddTransportItem($event)" class="btn btn-default btn-lg my-3">Add item
+      <button id="add-tr-item-b" (click)="onAddTransportItem()" class="btn btn-default btn-lg my-3">Add item
       </button>
       <div class="info-tooltip">i;
         <span class="tooltip-text">If you want to add another land use item or GHG factor for this part of the chain press this button.

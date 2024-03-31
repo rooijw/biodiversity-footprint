@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, SimpleChange, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import * as $ from 'jquery';
-import { isArray } from 'util';
+import res from "../../../assets/res.json";
+
 @Component({
   selector: 'app-transport-item',
   templateUrl: './transport-item.component.html',
@@ -35,10 +36,9 @@ export class TransportItemComponent implements OnInit {
   @Input() id: number;
   @Input() cpyData: any;
   state: string;
-
+  public res: any = res;
   showOther: boolean = false;
   prodType: "transport";
-  res: any;
   name: string = "";
   type: string = "";
   distance: number;
@@ -46,10 +46,9 @@ export class TransportItemComponent implements OnInit {
   other: number;
   economicAlocation: number;
 
-  transportTypes = [];
+  transportTypes: any[] = [];
   constructor() {
     this.state = "in";
-    this.res = this.getRes();
     for (let i = 0; i < this.res["Transport"].length; i++) {
       this.transportTypes.push(Object.keys(this.res["Transport"][i]));
     }
@@ -70,7 +69,7 @@ export class TransportItemComponent implements OnInit {
       }else{
         this.showOther = false;
       }
-      this.changes(undefined);
+      this.changes();
     }
   }
 
@@ -80,23 +79,9 @@ export class TransportItemComponent implements OnInit {
     this.deleteItemOutput.emit(this.id);
   }
 
-  //get results from json document
-  getRes() {
-    let json;
-    $.ajax({
-      'async': false,
-      'global': false,
-      'url': "/assets/res.json",
-      'dataType': "json",
-      'success': function (data) {
-        json = data;
-      }
-    });
-    return json;
-  }
 
   //notify other component that there has been a change and send changed data
-  changes($event) {
+  public changes() {
     if (Array.isArray(this.type)) {
       this.type = this.type[0];
     }
@@ -107,23 +92,23 @@ export class TransportItemComponent implements OnInit {
       this.showOther = false;
     }
 
-    let result = {
-      "id": this.id,
-      "name": this.name,
-      "type": this.type,
-      "distance": this.distance,
-      "weight": this.weight,
-      "impactArea": "Transport",
-      "economicAlocation": this.economicAlocation
-    }
-    if (this.showOther) {
-      result["msa"] = this.other;
-    } else {
-      this.res["Transport"].forEach(element => {
+    let msa = this.other;
+    if (!this.showOther) {
+      this.res["Transport"].forEach((element: any) => {
         if (Object.keys(element)[0] == this.type) {
           result["msa"] = element[this.type]
         }
       });
+    }
+    let result = {
+      id: this.id,
+      name: this.name,
+      type: this.type,
+      distance: this.distance,
+      weight: this.weight,
+      impactArea: "Transport",
+      economicAlocation: this.economicAlocation,
+      msa
     }
 
     this.changesEvent.emit(result);
@@ -131,21 +116,19 @@ export class TransportItemComponent implements OnInit {
 
   //get item data
   getData() {
-    let result = {
-      "name": this.name,
-      "type": this.type,
-      "distance": this.distance,
-      "weight": this.weight,
-      "impactArea": "Transport",
-      "economicAlocation": this.economicAlocation,
+
+    let other=this.other; 
+    if(!this.showOther){
+       other =0;
+    }
+    return  {
+      name: this.name,
+      type: this.type,
+      distance: this.distance,
+      weight: this.weight,
+      impactArea: "Transport",
+      economicAlocation: this.economicAlocation,
     }
 
-    if(this.showOther){
-      result["other"]=this.other;
-    }else{
-      result["other"]=false;
-    }
-
-    return result;
   }
 }

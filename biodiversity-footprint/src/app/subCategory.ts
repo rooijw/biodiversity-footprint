@@ -1,9 +1,9 @@
-import {Color} from "d3-color";
+
 
 export class SubCategory {
 
   name:string;
-  data = [];
+  data: number[] = [];
   color:String;
 
 

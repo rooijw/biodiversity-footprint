@@ -1,9 +1,8 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, QueryList } from '@angular/core';
 import { Result } from '../../app/result.class';
+import Chart from 'chart.js/auto';
 import { SubCategory } from '../../app/subCategory';
-import * as Chart from 'chart.js';
-import * as GraphToPdf from 'jspdf';
-import * as $ from 'jquery';
+import GraphToPdf from 'jspdf';
 import { ScenarioComponent } from '../scenario/scenario.component';
 
 @Component({
@@ -11,11 +10,12 @@ import { ScenarioComponent } from '../scenario/scenario.component';
   templateUrl: './graphs.component.html',
   styleUrls: ['./graphs.component.css'],
 })
+
 export class GraphsComponent implements OnInit {
   ctx: any;
   chartType = 'bar';
   myChart: any;
-  data = {};
+  data: any;
   options = {};
   //colors to be used in land use
   landUseColors = ["#293B8D", "#66AF44", "#3F92BE", "#A8B7D6", "#B4DCB9", "21306B", "#387D3E", "#237A96", "#B4DCB9", "#2E2D73"];
@@ -24,8 +24,7 @@ export class GraphsComponent implements OnInit {
   //colors to be used in transport
   transportColors = ["#191919", "#999999", "#323232", "#b2b2b2", "#4c4c4c", "#cccccc", "#665666" ,"#e5e5e5", "#7f7f7f", "#000000"];
 
-  @Input() scenariosArray: ScenarioComponent[];
-
+  @Input() scenarios: QueryList<ScenarioComponent> 
 
   constructor() {
   }
@@ -33,10 +32,8 @@ export class GraphsComponent implements OnInit {
   //Initially create Charts
   ngOnInit() {
     this.ctx = document.getElementById("myChart");
-
     // Global Options:
-    Chart.defaults.global.defaultFontColor = 'grey';
-
+    Chart.defaults.color = 'grey';
     this.options = {
       title: {
         display: true,
@@ -47,15 +44,15 @@ export class GraphsComponent implements OnInit {
         text: 'Biodiversity footprint'
       },
       scales: {
-        xAxes: [{
+        x: {
           scaleLabel: {
             display: true,
             fontSize: 18,
             labelString: 'Scenarios'
           },
           stacked: true
-        }],
-        yAxes: [{
+        },
+        y: {
           scaleLabel: {
             display: true,
             fontSize: 18,
@@ -65,42 +62,47 @@ export class GraphsComponent implements OnInit {
             beginAtZero: true
           },
           stacked: true
-        }]
+        }
       }
     };
 
-    this.init();
+    //this.initChart();
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.scenariosArray
+      this.scenarios.toArray();
     });
   }
-  init() {
+  initChart(data: any) {
     // Chart declaration:
     if (this.myChart) {
       this.myChart.destroy();
     }
-    this.myChart = new Chart(this.ctx, {
-      type: this.chartType,
-      data: this.data,
+    this.myChart= new Chart (this.ctx, 
+    { type: 'bar',
+      data,
       options: this.options
     });
-  }
+
+
+    console.log(this.chartType);
+    console.log(this.data);
+    console.log(this.options);
+  } 
 
   //update graph with array of results
   updateGraph(results: Result[]) {
-    var scenarios: String[] = [];
-    var datasets = [];
-    var subCategories: SubCategory[] = [];
+    const scenarios: String[] = [];
+    const datasets: [{ label: string; data: number[]; backgroundColor: String; }] = [{label: '', data: [0], backgroundColor: ''}];
+    const subCategories: SubCategory[] = [];
 
-    var countLandColors = 0;  //land use color to be used
-    var countGasColors = 0;   //GHG color to be used
-    var countScenarios = 0;   //number of scenarios
-    var countTransportColors = 0; //transport color to be used
+    let countLandColors = 0;  //land use color to be used
+    let countGasColors = 0;   //GHG color to be used
+    let countScenarios = 0;   //number of scenarios
+    let countTransportColors = 0; //transport color to be used
 
-    for (var i = 0; i < results.length; i++) {
+    for (let i = 0; i < results.length; i++) {
       if (scenarios.indexOf(results[i].scenarioTitle) < 0) { // scenario doesn't exist yet -> create one
         scenarios[countScenarios] = results[i].scenarioTitle; // for x-axis title
         countScenarios++;
@@ -109,10 +111,10 @@ export class GraphsComponent implements OnInit {
       //Add data to each subCategory
 
       if (subCategories.length > 0) {
-        var found = false;
+        let found = false;
 
         //look for result name in subcategories
-        for (var j = 0 ; j < subCategories.length ; j++){
+        for (let j = 0 ; j < subCategories.length ; j++){
           if (results[i].name == subCategories[j].name){
 
             //look if any scenario name matches with the scenario title of the result
@@ -125,8 +127,8 @@ export class GraphsComponent implements OnInit {
             }
           }
         }
-        //if not found
         if(!found) {
+          console.log(results[i])
           //if result category is land use create new category for land use, add data to it and push it into subCategories
           if (results[i].category == 'Land use'){
             var newSubCat = new SubCategory(results[i].name,this.landUseColors[countLandColors]);
@@ -201,25 +203,30 @@ export class GraphsComponent implements OnInit {
     }
 
     //put data from subCategories to currentResult
-    for (var j = 0; j < subCategories.length; j++) {
-      var currentResult = {
+    
+    for (let j = 0; j < subCategories.length; j++) {
+      const currentResult = {
         label: subCategories[j].name,
         data: subCategories[j].getData(),
         backgroundColor: subCategories[j].color
       };
-      datasets.push(currentResult);
+      if(j===0){
+        datasets[j] = currentResult;
+      } else {
+        datasets.push(currentResult)
+      }
     }
 
-    this.data = {
+    const data = {
       labels: scenarios,
-      datasets: datasets,
+      datasets, 
       options: this.options
     };
-    this.init();
+    this.initChart(data);
   }
 
   //downloads graph from myChart component with settings described below as a biodiversity_footprint.pdf document
-  downloadGraph($event){
+  downloadGraph(){
     var newCanvas = <HTMLCanvasElement> document.getElementById('myChart');
     var newCanvasImg = newCanvas.toDataURL("image/png", 1.0);
     var doc = new GraphToPdf('landscape');

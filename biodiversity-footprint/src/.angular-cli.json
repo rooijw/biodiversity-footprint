@@ -57,6 +57,5 @@
     "styleExt": "css",
     "component": {}
   },
-  "scripts": [ "./node_modules/jspdf/dist/jspdf.min.js",
-               "./node_modules/jquery/dist/jquery.min.js"]
+  "scripts": [ "./node_modules/jspdf/dist/jspdf.min.js" ]
 }

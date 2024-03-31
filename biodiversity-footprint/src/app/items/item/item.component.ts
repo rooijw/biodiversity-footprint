@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, SimpleChange, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import * as $ from 'jquery';
+import res from "../../../assets/res.json";
 
 @Component({
   selector: 'app-item',
@@ -41,14 +42,14 @@ export class ItemComponent implements OnInit {
   @Input() prodType: string;
   @Input() cpyData: any = {};
 
-  res: any;
+  public res: any = res;
   other: number;
   itemInfo: any;
-  footprintTypes = [];
-  selectedFTypes = undefined;
+  footprintTypes: string[] = [];
+  selectedFTypes: any[] = [];
   showExtraDropdown = false;
   showExtraInput = false;
-  impactArea: "";
+  impactArea:string = "";
   state: string;
 
   name = "";
@@ -57,13 +58,12 @@ export class ItemComponent implements OnInit {
   msa = 0;
   economicAlocation: number;
   placeholderValue = "Enter value";
-
-
+  
+  
   constructor() {
     this.state = "in";
-    this.res = this.getRes();
     let keys = Object.keys(this.res);
-    keys.forEach(element => {
+    keys.forEach((element: string) => {
       if (element != "Transport") {
         this.footprintTypes.push(element);
       }
@@ -79,7 +79,7 @@ export class ItemComponent implements OnInit {
     };
   }
 
-  createNewItemFromExcel(factorName, category, subCategory,MSA,percentage){
+  createNewItemFromExcel(factorName:string, category: string, subCategory: string,MSA: number,percentage: number){
     this.itemInfo.id=this.id;
     this.name =  factorName;
     this.impactArea = category;
@@ -92,8 +92,8 @@ export class ItemComponent implements OnInit {
 
   //if item is being copied use cpy data for this item
   ngOnInit() {
+    console.log("Vthis.cpyData",this.cpyData);
     if (this.cpyData) {
-
       this.name = this.cpyData.name;
       this.amount = this.cpyData.amount;
       this.impactArea = this.cpyData.impactArea;
@@ -102,7 +102,7 @@ export class ItemComponent implements OnInit {
         this.showExtraInput = true;
         this.other = this.cpyData.extraInput;
       }else{
-        this.res["" + this.impactArea + ""].forEach(element => {
+        this.res["" + this.impactArea + ""].forEach((element: any) => {
           if (Object.keys(element)[0] == this.type) {
             this.itemInfo.MSA = element[this.type];
             this.msa = element[this.type];
@@ -123,30 +123,18 @@ export class ItemComponent implements OnInit {
     } else {
       this.setNewFootprintType(this.footprintTypes[0]);
     }
-
-
   }
-
-  //get data from json document
-  getRes() {
-    let json;
-    $.ajax({
-      'async': false,
-      'global': false,
-      'url': "/assets/res.json",
-      'dataType': "json",
-      'success': function (data) {
-        json = data;
-      }
-    });
-    return json;
+  
+  onChangeFootPrintType(event: any) {
+    this.setNewFootprintType(event.target.value);
   }
 
   //set item 's impact area and change other input fields accordingly
-  setNewFootprintType(type: any) {
+  setNewFootprintType(type: string) {
+    console.log(this.res);
     this.impactArea = type;
     this.type = Object.keys(this.res["" + type + ""][0])[0];
-    let a = [];
+    let a: string[] = [];
 
     if(this.impactArea.includes("Land")){
 
@@ -157,19 +145,20 @@ export class ItemComponent implements OnInit {
       this.placeholderValue = "Enter quantity";
     }
 
-    this.res["" + type + ""].forEach(element => {
-      a.push(Object.keys(element));
+    this.res["" + type + ""].forEach((element: any) => {
+      a.push(String(Object.keys(element)));
     });
     this.selectedFTypes = a;
     this.showExtra(a[0][0]);
   }
 
   //enable extra to be shown if necessary
-  showExtra(chage: any) {
+  showExtra(event: any) {
+    const chage = event;//.target.split(',')[1]
     if (!this.cpyData) {
       this.itemInfo.type = chage;
     }
-    this.res["" + this.impactArea + ""].forEach(element => {
+    this.res["" + this.impactArea + ""].forEach((element: any) => {
       if (Object.keys(element)[0] == chage && !this.cpyData) {
         this.itemInfo.MSA = element[chage];
         this.msa = element[chage];
@@ -185,21 +174,23 @@ export class ItemComponent implements OnInit {
   }
 
   //set item name and notify that result has changed
-  setItemName(name: string) {
-    this.name = name;
-    this.itemInfo.name = name;
+  setItemName(event: any) {
+    this.name = event.target.value;
+    this.itemInfo.name = event.target.value;
     this.resultChanged();
   }
 
   //set item amount and notify that result has changed
-  setItemAmount(amount: number) {
+  setItemAmount(event: any) {
+    const amount = event.target.value;
     this.amount = amount;
     this.itemInfo.amount = amount;
     this.resultChanged();
   }
 
   //set item economic allocation and notify that result has changed
-  setItemEconomicAlocation(economicAlocation: number){
+  setItemEconomicAlocation(event: any){
+    const economicAlocation:number = event.target.value;
     this.economicAlocation = economicAlocation;
     this.itemInfo.economicAlocation = economicAlocation;
     this.resultChanged();
@@ -235,7 +226,7 @@ export class ItemComponent implements OnInit {
 
   //get msa of the item
   getMsa() {
-    this.res["" + this.impactArea + ""].forEach(element => {
+    this.res["" + this.impactArea + ""].forEach((element: any) => {
       if (Object.keys(element)[0] == this.type) {
         this.msa = element[this.type]
       }
@@ -244,17 +235,17 @@ export class ItemComponent implements OnInit {
 
   //get data of the item
   getData() {
-    let result = {};
-    result["name"] = this.name;
-    result["impactArea"] = this.impactArea
-    result["type"] = this.type;
-    if(this.showExtraInput){
-      result["extraInput"] = this.other;
-    }else{
-      result["extraInput"] = false;
+    let extraInput = this.other;
+    if(!this.showExtraInput){
+      extraInput = 0;
     }
-    result["amount"] = this.amount;
-    result["economicAlocation"] = this.economicAlocation;
-    return result;
+    return {
+      name: this.name,
+      impactArea: this.impactArea,
+      type: this.type,
+      extraInput,
+      amount: this.amount,
+      economicAlocation: this.economicAlocation
+    };
   }
 }

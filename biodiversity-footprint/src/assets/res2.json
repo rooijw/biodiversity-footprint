@@ -1,10 +1,9 @@
-module.exports = {
+{
   "Land use": [
     {
       "msa": 1,
       "type": "Primary forests",
-      "description": "Forests with minimal disturbance where flora and fauna species abundance is near pristine.\n" +
-      " Not present in the Netherlands."
+      "description": "Forests with minimal disturbance where flora and fauna species abundance is near pristine.\n Not present in the Netherlands."
     },
     {
       "msa": 0.2,
@@ -32,8 +31,7 @@ module.exports = {
     },
    {"msa": 0.5,
      "type": "Agro-forestry",
-     "description": "Agricultural production intercropped with (native) trees. \n" +
-     "Trees are kept for shade or as wind shelter"
+     "description": "Agricultural production intercropped with (native) trees. \n Trees are kept for shade or as wind shelter"
 
    },
    {"msa": 0.3,
@@ -55,8 +53,7 @@ module.exports = {
    },
    {"msa": 0.1,
      "type": "Intensive managed man made pastures",
-     "description": "Forests, woodlands and natural grasslands that have been converted\n" +
-     "to grasslands for livestock grazing. "
+     "description": "Forests, woodlands and natural grasslands that have been converted\n to grasslands for livestock grazing. "
    },
    {"msa": 1,
      "type": "Natural grass & shrub lands",
@@ -68,8 +65,7 @@ module.exports = {
    },
    {"msa": 0.05,
      "type": "Mining area",
-     "description": "Areas predominantly excavated land for mining" +
-     "MSA value estimated; no cause-effect relation yet"
+     "description": "Areas predominantly excavated land for mining MSA value estimated; no cause-effect relation yet"
    },
    {"msa": 1,
      "type": "Natural bare, rock and snow",
@@ -137,7 +133,7 @@ module.exports = {
      "type": "Natural gas (m3)",
      "description": "Naturally occurring hydrocarbon gas mixture consisting primarily of methane, but commonly including varying amounts of other higher alkanes, and sometimes a small percentage of carbon dioxide, nitrogen, hydrogen sulfide, or helium"
     },
-   {"CO2 eq": 0.,
+   {"CO2 eq": 0,
      "type": "Electricity from wind, sun and water power (kWh)",
      "description": "Electricity from wind, sun and water power (kWh)"
 
@@ -147,7 +143,7 @@ module.exports = {
      "description": "Biomass is an industry term for getting energy by burning wood, and other organic matter"
 
    },
-   {"CO2 eq": 0.,
+   {"CO2 eq": 0,
      "type": "Other",
      "description": "Any other type"
     }

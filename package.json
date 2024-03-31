@@ -1,8 +1,0 @@
-{
-    "name": "biodiversity-footprint",
-    "version": "0.1.0",
-    "scripts": {
-      "start": "npm start",
-      "postinstall": "npm install --prefix biodiversity-footprint"
-    }
-  }

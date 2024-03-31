@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/biodiversity-footprint",
+            "outputPath": "dist/biodiversity-footprint2",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "biodiversity-footprint:build:production"
+              "buildTarget": "biodiversity-footprint2:build:production"
             },
             "development": {
-              "buildTarget": "biodiversity-footprint:build:development"
+              "buildTarget": "biodiversity-footprint2:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "biodiversity-footprint:build"
+            "buildTarget": "biodiversity-footprint2:build"
           }
         },
         "test": {

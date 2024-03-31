@@ -2,7 +2,7 @@
     "name": "biodiversity-footprint",
     "version": "0.1.0",
     "scripts": {
-      "start": "cd biodiversity-footprint && ng serve",
+      "start": "npm start",
       "postinstall": "npm install --prefix biodiversity-footprint"
     }
   }

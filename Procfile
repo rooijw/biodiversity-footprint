@@ -1,0 +1,1 @@
+web:  cd biodiversity-footprint && npm start

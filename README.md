@@ -40,5 +40,8 @@ For more information about using Node.js on Heroku, see these Dev Center article
 
 
 # biodiversity-footprint
+heroku create -a biodiversity footprint
+heroku git:remote -a biodiversity-footprint
+
 # to deploy herocu from a subdirectory 
 git subtree push --prefix biodiversity-footprint heroku master

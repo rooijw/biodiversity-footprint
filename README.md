@@ -21,6 +21,8 @@ Your app should now be running on [localhost:5000](http://localhost:5000/).
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
+https://medium.com/geekculture/how-to-easily-deploy-your-first-angular-app-on-heroku-65dd546c8181
+
 ## Documentation
 
 For more information about using Node.js on Heroku, see these Dev Center articles:
